@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef } from 'react';
 import DarkButton from './DarkButton';
+import PixelHoverTitle from './PixelHoverTitle';
 import './HeroSection.css';
 
 function HeroSection() {
@@ -70,9 +71,7 @@ function HeroSection() {
 
           <div className="hero__lower">
             <div className="hero__title-track" ref={titleTrackRef}>
-              <h1 className="hero__title" data-text-role="heading" ref={titleRef}>
-                WEBDESIGN
-              </h1>
+              <PixelHoverTitle className="hero__title" text="WEBDESIGN" titleRef={titleRef} />
             </div>
 
             <div className="hero__body">

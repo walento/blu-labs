@@ -1,0 +1,30 @@
+.pixel-hover-title {
+  position: relative;
+  display: block;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 0.88;
+  color: var(--color-heading-neon);
+}
+
+.pixel-hover-title__text,
+.pixel-hover-title__canvas {
+  display: block;
+  width: 100%;
+}
+
+.pixel-hover-title__text {
+  white-space: nowrap;
+  line-height: inherit;
+  color: inherit;
+}
+
+.pixel-hover-title__canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.pixel-hover-title--webgl-ready .pixel-hover-title__text {
+  opacity: 0;
+}

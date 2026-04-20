@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="./src/components/DarkButton.css" />
     <link rel="stylesheet" href="./src/components/LightButton.css" />
     <link rel="stylesheet" href="./src/components/Navbar.css" />
+    <link rel="stylesheet" href="./src/components/PixelHoverTitle.css" />
     <link rel="stylesheet" href="./src/components/SiteHeader.css" />
     <link rel="stylesheet" href="./src/components/HeroSection.css" />
     <style>
@@ -67,7 +68,9 @@
 
           <div class="hero__lower">
             <div class="hero__title-track">
-              <h1 class="hero__title" data-text-role="heading">WEBDESIGN</h1>
+              <div class="pixel-hover-title hero__title">
+                <h1 class="pixel-hover-title__text">WEBDESIGN</h1>
+              </div>
             </div>
 
             <div class="hero__body">
@@ -98,10 +101,12 @@
         </div>
       </div>
     </section>
-    <script>
+    <script type="module">
+      import { createPixelHoverTextEffect } from './src/components/createPixelHoverTextEffect.js';
+
       const fitHeroTitle = () => {
         const track = document.querySelector('.hero__title-track');
-        const title = document.querySelector('.hero__title');
+        const title = document.querySelector('.pixel-hover-title__text');
 
         if (!track || !title) {
           return;
@@ -140,8 +145,13 @@
 
       fitHeroTitle();
       syncLightButtonLabel();
+      createPixelHoverTextEffect(
+        document.querySelector('.pixel-hover-title'),
+        document.querySelector('.pixel-hover-title__text'),
+        'WEBDESIGN'
+      );
       window.addEventListener('resize', fitHeroTitle);
       window.addEventListener('resize', syncLightButtonLabel);
     </script>
   </body>
-  </html>
+</html>

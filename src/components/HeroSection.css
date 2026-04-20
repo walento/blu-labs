@@ -66,10 +66,7 @@
 }
 
 .hero__title {
-  display: inline-block;
-  white-space: nowrap;
-  line-height: 0.88;
-  color: var(--color-heading-neon);
+  width: 100%;
 }
 
 .hero__title-track {
