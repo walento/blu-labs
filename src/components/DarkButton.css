@@ -1,0 +1,122 @@
+.dark-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 13.125rem;
+  min-height: 2.5625rem;
+  padding: 0.1875rem;
+  border: none;
+  border-radius: 999px;
+  background: var(--color-black-soft);
+  color: var(--color-white-soft);
+  cursor: pointer;
+  overflow: hidden;
+  transition:
+    background-color 340ms ease,
+    color 340ms ease;
+}
+
+.dark-button:focus-visible {
+  outline: 2px solid var(--color-heading-neon);
+  outline-offset: 3px;
+}
+
+.dark-button:hover {
+  background: var(--color-white-soft);
+  color: var(--color-black-soft);
+}
+
+.dark-button__content {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.1875rem;
+  padding-left: 0.75rem;
+  padding-right: 2.875rem;
+  transition: transform 340ms ease;
+}
+
+.dark-button:hover .dark-button__content {
+  transform: translateX(2.125rem);
+}
+
+.dark-button__label {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0;
+  white-space: nowrap;
+  transition: color 340ms ease;
+}
+
+.dark-button__icon {
+  position: absolute;
+  top: 0.1875rem;
+  bottom: 0.1875rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.1875rem;
+  height: auto;
+  border-radius: 50%;
+  background: var(--color-white-soft);
+  transform-origin: center;
+  transition:
+    transform 340ms ease,
+    opacity 340ms ease;
+}
+
+.dark-button__icon--left {
+  left: 0.1875rem;
+  transform: scale(0);
+  opacity: 0;
+}
+
+.dark-button__icon--right {
+  right: 0.1875rem;
+  transform: scale(1);
+  opacity: 1;
+}
+
+.dark-button:hover .dark-button__icon--left {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.dark-button:hover .dark-button__icon--right {
+  transform: scale(0);
+  opacity: 0;
+}
+
+.dark-button__arrow {
+  position: relative;
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.dark-button__arrow::before,
+.dark-button__arrow::after {
+  content: '';
+  position: absolute;
+}
+
+.dark-button__arrow::before {
+  top: 50%;
+  left: 0;
+  width: 0.875rem;
+  height: 0.09375rem;
+  background: var(--color-black-soft);
+  border-radius: 999px;
+  transform: translateY(-50%);
+}
+
+.dark-button__arrow::after {
+  top: 50%;
+  right: 0.0625rem;
+  width: 0.4375rem;
+  height: 0.4375rem;
+  border-top: 0.09375rem solid var(--color-black-soft);
+  border-right: 0.09375rem solid var(--color-black-soft);
+  transform: translateY(-50%) rotate(45deg);
+}

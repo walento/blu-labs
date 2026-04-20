@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hero Preview</title>
+    <link rel="stylesheet" href="./src/styles/fonts.css" />
+    <link rel="stylesheet" href="./src/styles/tokens.css" />
+    <link rel="stylesheet" href="./src/styles/reset.css" />
+    <link rel="stylesheet" href="./src/styles/global.css" />
+    <link rel="stylesheet" href="./src/components/DarkButton.css" />
+    <link rel="stylesheet" href="./src/components/LightButton.css" />
+    <link rel="stylesheet" href="./src/components/Navbar.css" />
+    <link rel="stylesheet" href="./src/components/SiteHeader.css" />
+    <link rel="stylesheet" href="./src/components/HeroSection.css" />
+    <style>
+      body {
+        min-height: 100vh;
+        padding: 0.625rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="navbar">
+        <div class="navbar__left">
+          <a class="navbar__logo" href="/" aria-label="blu labs Startseite">
+            <span class="navbar__logo-main">blu</span>
+            <span class="navbar__logo-accent">::</span>
+            <span class="navbar__logo-main">labs</span>
+          </a>
+
+          <nav aria-label="Hauptnavigation">
+            <ul class="navbar__menu">
+              <li><a class="navbar__link" href="/">PORTFOLIO</a></li>
+              <li><a class="navbar__link" href="/">EXPERTISE</a></li>
+              <li><a class="navbar__link" href="/">ABOUT</a></li>
+            </ul>
+          </nav>
+        </div>
+
+        <button class="light-button navbar__cta" type="button">
+          <span class="light-button__icon light-button__icon--left" aria-hidden="true">
+            <span class="light-button__arrow"></span>
+          </span>
+          <span class="light-button__content">
+            <span class="light-button__label" data-desktop-label="JETZT PROTOTYP SICHERN" data-mobile-label="PROTOTYP SICHERN">JETZT PROTOTYP SICHERN</span>
+          </span>
+          <span class="light-button__icon light-button__icon--right" aria-hidden="true">
+            <span class="light-button__arrow"></span>
+          </span>
+        </button>
+      </div>
+    </header>
+
+    <section class="hero" aria-label="Hero Section">
+      <div class="hero__inner">
+        <div class="hero__content">
+          <p class="hero__kicker">
+            <span class="hero__kicker-index">[1/8]</span>
+            <span class="hero__kicker-copy" data-text-role="subheading-display">
+              <span>WEBSITES FÜR</span>
+              <span>IT-DIENSTLEISTER</span>
+              <span>UND IT-BERATER</span>
+            </span>
+          </p>
+
+          <div class="hero__lower">
+            <div class="hero__title-track">
+              <h1 class="hero__title" data-text-role="heading">WEBDESIGN</h1>
+            </div>
+
+            <div class="hero__body">
+              <p class="hero__text">
+                <span class="hero__text-logo">
+                  <span class="hero__text-logo-main">blu</span>
+                  <span class="hero__text-logo-accent">::</span>
+                  <span class="hero__text-logo-main">labs</span>
+                </span>
+                ist dein Ansprechpartner für Websites in der IT, die aus der Masse herausstechen.
+                In einer Welt voller AI-Slop, achten wir aufs Detail und sorgen dafür, dass du als
+                IT-Dienstleister oder -Berater bei potentiellen Kunden positiv im Kopf bleibst.
+              </p>
+
+              <button class="dark-button" type="button">
+                <span class="dark-button__icon dark-button__icon--left" aria-hidden="true">
+                  <span class="dark-button__arrow"></span>
+                </span>
+                <span class="dark-button__content">
+                  <span class="dark-button__label">JETZT PROTOTYP SICHERN</span>
+                </span>
+                <span class="dark-button__icon dark-button__icon--right" aria-hidden="true">
+                  <span class="dark-button__arrow"></span>
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script>
+      const fitHeroTitle = () => {
+        const track = document.querySelector('.hero__title-track');
+        const title = document.querySelector('.hero__title');
+
+        if (!track || !title) {
+          return;
+        }
+
+        const availableWidth = track.clientWidth;
+        let low = 32;
+        let high = 320;
+        let best = low;
+
+        while (low <= high) {
+          const mid = Math.floor((low + high) / 2);
+          title.style.fontSize = `${mid}px`;
+
+          if (title.scrollWidth <= availableWidth) {
+            best = mid;
+            low = mid + 1;
+          } else {
+            high = mid - 1;
+          }
+        }
+
+        title.style.fontSize = `${best}px`;
+      };
+
+      const syncLightButtonLabel = () => {
+        const label = document.querySelector('.light-button__label');
+
+        if (!label) {
+          return;
+        }
+
+        const isMobile = window.matchMedia('(max-width: 767px)').matches;
+        label.textContent = isMobile ? label.dataset.mobileLabel : label.dataset.desktopLabel;
+      };
+
+      fitHeroTitle();
+      syncLightButtonLabel();
+      window.addEventListener('resize', fitHeroTitle);
+      window.addEventListener('resize', syncLightButtonLabel);
+    </script>
+  </body>
+  </html>

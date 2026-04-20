@@ -1,0 +1,21 @@
+.site-header {
+  position: sticky;
+  top: var(--page-padding-x);
+  z-index: 30;
+  width: 100%;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+  margin-bottom: calc(var(--navbar-height, 2.5625rem) * -1);
+  pointer-events: none;
+}
+
+.site-header .navbar {
+  pointer-events: auto;
+}
+
+@media (max-width: 767px) {
+  .site-header {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}

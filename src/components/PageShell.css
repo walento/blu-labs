@@ -1,0 +1,24 @@
+.page-shell {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  overflow: clip;
+}
+
+.page-shell__canvas {
+  min-height: 100vh;
+  width: 100%;
+  padding-left: var(--page-padding-x);
+  padding-right: var(--page-padding-x);
+  padding-top: var(--page-padding-x);
+  padding-bottom: var(--page-padding-y);
+}
+
+.page-shell__preview {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+}

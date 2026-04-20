@@ -1,0 +1,43 @@
+:root {
+  --page-bg: #e9e7e6;
+  --page-fg: #2f271e;
+  --page-muted: #72604b;
+  --page-border: rgba(178, 161, 151, 0.28);
+  --page-max-width: 1600px;
+  --page-padding-x: 2.5rem;
+  --page-padding-y: clamp(20px, 3vw, 40px);
+  --color-button-light: rgba(245, 234, 228, 0.6);
+  --color-surface-green: #cfd8b4;
+  --color-gradient-beige-start: #e8e4df;
+  --color-gradient-beige-end: #d7cfc5;
+  --gradient-beige-radial: radial-gradient(
+    circle at center,
+    var(--color-gradient-beige-start) 0%,
+    var(--color-gradient-beige-end) 100%
+  );
+  --color-box-green-stroke: #cec4ba;
+  --color-box-text: #72604b;
+  --color-heading-neon: #e9ffd3;
+  --color-heading-pastel: #bac1a3;
+  --color-white-soft: #fefefe;
+  --color-line-soft: rgba(178, 161, 151, 0.28);
+  --color-navbar-bg: rgba(178, 161, 151, 0.28);
+  --color-black-soft: #2f271e;
+  --color-logo-accent: #a49c8e;
+  --font-heading: 'Early Gameboy', sans-serif;
+  --font-subheading: 'IBM Plex Mono', monospace;
+  --font-body: 'Lato', sans-serif;
+  --font-logo: 'Alte Haas Grotesk', sans-serif;
+  --heading-letter-spacing: -0.05em;
+  --subheading-letter-spacing: 0.05em;
+  --subheading-display-size: clamp(2.25rem, 4.7vw, 3.625rem);
+  --subheading-display-line-height: 0.95;
+  --body-letter-spacing: 0;
+  --heading-outline-width: 4px;
+}
+
+@media (max-width: 1399px) {
+  :root {
+    --subheading-display-size: clamp(1.6875rem, 3.5vw, 2.71875rem);
+  }
+}

@@ -1,0 +1,157 @@
+.hero {
+  width: 100%;
+  min-height: calc(100vh - var(--page-padding-x) - var(--page-padding-y));
+  background-color: var(--page-bg);
+  background-image:
+    url('../assets/images/hero-mouse-cluster.png'),
+    var(--gradient-beige-radial);
+  background-repeat: no-repeat, no-repeat;
+  background-position: right bottom, center;
+  background-size: contain, cover;
+  background-blend-mode: difference, normal;
+}
+
+.hero__inner {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - var(--page-padding-x) - var(--page-padding-y));
+  padding: calc(2.5rem + var(--navbar-height, 2.5625rem) + 1.75rem) 2.5rem
+    3.4375rem;
+}
+
+.hero__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1 1 auto;
+  gap: 5rem;
+  padding: 0 0.0625rem;
+}
+
+.hero__lower {
+  display: flex;
+  flex-direction: column;
+  gap: 2.75rem;
+}
+
+.hero__kicker {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  color: var(--color-black-soft);
+}
+
+@media (min-width: 1600px) {
+  .hero__kicker {
+    margin-top: 3.25rem;
+  }
+}
+
+.hero__kicker-index {
+  padding-top: 0.375rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.hero__kicker-copy {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-subheading);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.hero__title {
+  display: inline-block;
+  white-space: nowrap;
+  line-height: 0.88;
+  color: var(--color-heading-neon);
+}
+
+.hero__title-track {
+  width: 100%;
+  overflow: hidden;
+}
+
+.hero__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.625rem;
+  width: min(50%, 42rem);
+  max-width: 42rem;
+}
+
+.hero__text {
+  font-size: 1.125rem;
+  line-height: 1.2;
+  color: var(--color-black-soft);
+}
+
+.hero__text-logo {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0;
+  font-family: var(--font-logo);
+  font-size: 1em;
+  font-weight: 700;
+}
+
+.hero__text-logo-main {
+  font-family: inherit;
+  font-weight: inherit;
+  color: var(--color-black-soft);
+}
+
+.hero__text-logo-accent {
+  font-family: inherit;
+  font-weight: inherit;
+  color: var(--color-logo-accent);
+}
+
+@media (max-width: 767px) {
+  .hero {
+    background-image:
+      url('../assets/images/hero-mouse-cluster.png'),
+      var(--gradient-beige-radial);
+    background-repeat: no-repeat, no-repeat;
+    background-position: center center, center;
+    background-size: auto 50%, cover;
+    background-blend-mode: difference, normal;
+  }
+
+  .hero__inner {
+    min-height: calc(100vh - var(--page-padding-x) - var(--page-padding-y));
+    padding: calc(1.5rem + var(--navbar-height, 2.5625rem) + 4.5rem) 1.5rem
+      2.25rem;
+  }
+
+  .hero__content {
+    gap: 3rem;
+  }
+
+  .hero__lower {
+    gap: 1.75rem;
+  }
+
+  .hero__kicker {
+    gap: 0.5rem;
+  }
+
+  .hero__kicker-index {
+    padding-top: 0.1875rem;
+    font-size: 0.875rem;
+  }
+
+  .hero__text {
+    font-size: 1rem;
+  }
+
+  .hero__body {
+    width: min(100%, 32rem);
+  }
+}
