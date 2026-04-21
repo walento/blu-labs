@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import mouseSingleOne from '../assets/images/hero-mouse-single-1.png';
 import mouseSingleTwo from '../assets/images/hero-mouse-single-2.png';
 import './HeroFloatingMice.css';
@@ -20,7 +21,8 @@ const FLOATING_MICE = [
     spinDelay: '-2.5s',
     blur: '5.5px',
     opacity: 0.82,
-    layer: 0,
+    layer: -1,
+    scrollFactor: 1,
   },
   {
     id: 'float-mouse-3',
@@ -41,6 +43,7 @@ const FLOATING_MICE = [
     opacity: 1,
     layer: 2,
     isForeground: true,
+    scrollFactor: 1,
   },
   {
     id: 'float-mouse-4',
@@ -61,6 +64,7 @@ const FLOATING_MICE = [
     opacity: 1,
     layer: 2,
     isForeground: true,
+    scrollFactor: 1,
   },
   {
     id: 'float-mouse-5',
@@ -79,7 +83,8 @@ const FLOATING_MICE = [
     spinDelay: '-12.8s',
     blur: '2.6px',
     opacity: 0.86,
-    layer: 1,
+    layer: 0,
+    scrollFactor: 1,
   },
   {
     id: 'float-mouse-6',
@@ -98,7 +103,8 @@ const FLOATING_MICE = [
     spinDelay: '-9s',
     blur: '2.4px',
     opacity: 0.82,
-    layer: 1,
+    layer: 0,
+    scrollFactor: 1,
   },
   {
     id: 'float-mouse-7',
@@ -117,7 +123,8 @@ const FLOATING_MICE = [
     spinDelay: '-5.8s',
     blur: '6.2px',
     opacity: 0.72,
-    layer: 0,
+    layer: -1,
+    scrollFactor: 1,
   },
   {
     id: 'float-mouse-8',
@@ -136,7 +143,8 @@ const FLOATING_MICE = [
     spinDelay: '-7.4s',
     blur: '6.6px',
     opacity: 0.7,
-    layer: 0,
+    layer: -1,
+    scrollFactor: 1,
   },
   {
     id: 'float-mouse-9',
@@ -157,6 +165,7 @@ const FLOATING_MICE = [
     opacity: 1,
     layer: 2,
     isForeground: true,
+    scrollFactor: 1,
   },
   {
     id: 'float-mouse-10',
@@ -175,7 +184,8 @@ const FLOATING_MICE = [
     spinDelay: '-11.2s',
     blur: '2.8px',
     opacity: 0.82,
-    layer: 1,
+    layer: 0,
+    scrollFactor: 1,
   },
   {
     id: 'float-mouse-11',
@@ -194,7 +204,8 @@ const FLOATING_MICE = [
     spinDelay: '-13.6s',
     blur: '6.1px',
     opacity: 0.68,
-    layer: 0,
+    layer: -1,
+    scrollFactor: 1,
   },
   {
     id: 'float-mouse-12',
@@ -213,7 +224,8 @@ const FLOATING_MICE = [
     spinDelay: '-3.4s',
     blur: '6.8px',
     opacity: 0.66,
-    layer: 0,
+    layer: -1,
+    scrollFactor: 1,
   },
   {
     id: 'float-mouse-13',
@@ -232,7 +244,8 @@ const FLOATING_MICE = [
     spinDelay: '-15.5s',
     blur: '6.4px',
     opacity: 0.7,
-    layer: 0,
+    layer: -1,
+    scrollFactor: 1,
   },
   {
     id: 'float-mouse-14',
@@ -251,7 +264,8 @@ const FLOATING_MICE = [
     spinDelay: '-6.2s',
     blur: '6.5px',
     opacity: 0.67,
-    layer: 0,
+    layer: -1,
+    scrollFactor: 1,
   },
   {
     id: 'float-mouse-15',
@@ -270,7 +284,8 @@ const FLOATING_MICE = [
     spinDelay: '-9.6s',
     blur: '6.9px',
     opacity: 0.65,
-    layer: 0,
+    layer: -1,
+    scrollFactor: 1,
   },
   {
     id: 'float-mouse-16',
@@ -289,7 +304,8 @@ const FLOATING_MICE = [
     spinDelay: '-12.8s',
     blur: '6.2px',
     opacity: 0.69,
-    layer: 0,
+    layer: -1,
+    scrollFactor: 1,
   },
   {
     id: 'float-mouse-17',
@@ -308,7 +324,8 @@ const FLOATING_MICE = [
     spinDelay: '-15.2s',
     blur: '6.7px',
     opacity: 0.66,
-    layer: 0,
+    layer: -1,
+    scrollFactor: 1,
   },
   {
     id: 'float-mouse-18',
@@ -327,7 +344,8 @@ const FLOATING_MICE = [
     spinDelay: '-16.8s',
     blur: '7px',
     opacity: 0.64,
-    layer: 0,
+    layer: -1,
+    scrollFactor: 1,
   },
   {
     id: 'float-mouse-19',
@@ -346,13 +364,92 @@ const FLOATING_MICE = [
     spinDelay: '-18.5s',
     blur: '6.3px',
     opacity: 0.68,
-    layer: 0,
+    layer: -1,
+    scrollFactor: 1,
   },
 ];
 
 function HeroFloatingMice() {
+  const rootRef = useRef(null);
+
+  useEffect(() => {
+    const root = rootRef.current;
+
+    if (!root) {
+      return undefined;
+    }
+
+    let frameId = 0;
+    let targetOffset = 0;
+    let currentOffset = 0;
+    let isAnimating = false;
+    const parallaxItems = Array.from(
+      root.querySelectorAll('.hero-floating-mice__parallax')
+    ).map((node) => {
+      const item = node.closest('.hero-floating-mice__item');
+      const factor = Number.parseFloat(item?.style.getPropertyValue('--mouse-scroll-factor')) || 0;
+
+      return { node, factor };
+    });
+
+    const applyOffset = () => {
+      parallaxItems.forEach(({ node, factor }) => {
+        node.style.transform = `translate3d(0, ${(currentOffset * factor).toFixed(2)}px, 0)`;
+      });
+    };
+
+    const setOffset = () => {
+      const hero = root.closest('.hero');
+
+      if (!hero) {
+        return;
+      }
+
+      const rect = hero.getBoundingClientRect();
+      const viewportHeight = window.innerHeight || 1;
+      const scrollProgress = Math.min(
+        Math.max((viewportHeight - rect.top) / (rect.height + viewportHeight), 0),
+        1
+      );
+
+      targetOffset = (scrollProgress - 0.5) * -420;
+
+      if (!isAnimating) {
+        isAnimating = true;
+        frameId = window.requestAnimationFrame(tick);
+      }
+    };
+
+    const tick = () => {
+      currentOffset += (targetOffset - currentOffset) * 0.09;
+      applyOffset();
+
+      if (Math.abs(targetOffset - currentOffset) > 0.08) {
+        frameId = window.requestAnimationFrame(tick);
+        return;
+      }
+
+      currentOffset = targetOffset;
+      applyOffset();
+      isAnimating = false;
+    };
+
+    setOffset();
+    window.addEventListener('scroll', setOffset, { passive: true });
+    window.addEventListener('resize', setOffset);
+
+    return () => {
+      window.removeEventListener('scroll', setOffset);
+      window.removeEventListener('resize', setOffset);
+      window.cancelAnimationFrame(frameId);
+      parallaxItems.forEach(({ node }) => {
+        node.style.transform = '';
+      });
+    };
+  }, []);
+
   return (
-    <div className="hero-floating-mice" aria-hidden="true">
+    <div className="hero-floating-mice" aria-hidden="true" ref={rootRef}>
       {FLOATING_MICE.map((mouse) => (
         <div
           key={mouse.id}
@@ -375,24 +472,27 @@ function HeroFloatingMice() {
             '--mouse-blur': mouse.blur,
             '--mouse-opacity': mouse.opacity,
             '--mouse-layer': mouse.layer,
+            '--mouse-scroll-factor': mouse.scrollFactor,
           }}
         >
-          <div className="hero-floating-mice__visual">
-            <div className="hero-floating-mice__spin">
-              {mouse.isForeground ? (
+          <div className="hero-floating-mice__parallax">
+            <div className="hero-floating-mice__visual">
+              <div className="hero-floating-mice__spin">
+                {mouse.isForeground ? (
+                  <img
+                    className="hero-floating-mice__image hero-floating-mice__image--fill"
+                    src={mouse.image}
+                    alt=""
+                    draggable="false"
+                  />
+                ) : null}
                 <img
-                  className="hero-floating-mice__image hero-floating-mice__image--fill"
+                  className="hero-floating-mice__image"
                   src={mouse.image}
                   alt=""
                   draggable="false"
                 />
-              ) : null}
-              <img
-                className="hero-floating-mice__image"
-                src={mouse.image}
-                alt=""
-                draggable="false"
-              />
+              </div>
             </div>
           </div>
         </div>

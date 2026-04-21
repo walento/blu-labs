@@ -16,6 +16,10 @@
   background: var(--color-navbar-bg);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+  overflow: hidden;
+  clip-path: inset(0 100% 0 0 round 0.25rem);
+  animation: navbar-shell-reveal 720ms cubic-bezier(0.65, 0, 0.35, 1) 1760ms both;
+  will-change: clip-path;
 }
 
 .navbar__logo {
@@ -27,6 +31,7 @@
   line-height: 1;
   letter-spacing: 0;
   color: var(--color-black-soft);
+  animation: navbar-content-reveal 360ms ease 2480ms both;
 }
 
 .navbar__logo-main {
@@ -46,6 +51,7 @@
   align-items: center;
   gap: 4rem;
   list-style: none;
+  animation: navbar-content-reveal 360ms ease 2560ms both;
 }
 
 .navbar__link {
@@ -83,6 +89,27 @@
 
 .navbar__cta {
   flex: 0 0 auto;
+  animation: navbar-content-reveal 420ms ease 2480ms both;
+}
+
+@keyframes navbar-shell-reveal {
+  0% {
+    clip-path: inset(0 100% 0 0 round 0.25rem);
+  }
+
+  100% {
+    clip-path: inset(0 0 0 0 round 0.25rem);
+  }
+}
+
+@keyframes navbar-content-reveal {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 @media (max-width: 767px) {
@@ -107,5 +134,17 @@
 
   .navbar__logo {
     font-size: 1.4rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar__left,
+  .navbar__logo,
+  .navbar__menu,
+  .navbar__cta {
+    animation: none;
+    opacity: 1;
+    clip-path: none;
+    transform: none;
   }
 }

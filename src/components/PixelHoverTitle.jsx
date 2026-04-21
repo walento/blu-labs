@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { createDecodeTextReveal } from './createDecodeTextReveal';
 import { createPixelHoverTextEffect } from './createPixelHoverTextEffect';
 import './PixelHoverTitle.css';
 
@@ -14,7 +15,13 @@ function PixelHoverTitle({ text, className = '', titleRef }) {
       return undefined;
     }
 
-    return createPixelHoverTextEffect(root, textNode, text);
+    const destroyPixelHover = createPixelHoverTextEffect(root, textNode, text);
+    const destroyDecodeReveal = createDecodeTextReveal(root, textNode, text);
+
+    return () => {
+      destroyDecodeReveal();
+      destroyPixelHover();
+    };
   }, [text]);
 
   return (

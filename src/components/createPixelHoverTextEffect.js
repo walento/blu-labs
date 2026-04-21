@@ -210,9 +210,10 @@ export function createPixelHoverTextEffect(root, sourceElement, text) {
 
   let rafId = 0;
   let isDisposed = false;
+  let textureText = text;
 
   const updateTexture = () => {
-    drawTextTexture(sourceElement, textureCanvas, text);
+    drawTextTexture(sourceElement, textureCanvas, textureText);
 
     const width = Math.max(sourceElement.clientWidth, 1);
     const height = Math.max(sourceElement.clientHeight, 1);
@@ -226,6 +227,11 @@ export function createPixelHoverTextEffect(root, sourceElement, text) {
     gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
     gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, textureCanvas);
+  };
+
+  root.__pixelHoverUpdateText = (nextText) => {
+    textureText = nextText;
+    updateTexture();
   };
 
   const resizeObserver = new ResizeObserver(updateTexture);
@@ -342,6 +348,7 @@ export function createPixelHoverTextEffect(root, sourceElement, text) {
     root.removeEventListener('pointerenter', onPointerEnter);
     root.removeEventListener('pointerleave', onPointerLeave);
     root.classList.remove('pixel-hover-title--webgl-ready');
+    delete root.__pixelHoverUpdateText;
     canvas.remove();
 
     if (positionBuffer) {

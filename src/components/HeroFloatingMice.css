@@ -11,11 +11,22 @@
   bottom: calc(var(--mouse-size) * -1.7);
   width: var(--mouse-size);
   aspect-ratio: 176 / 222;
-  animation: hero-mouse-rise var(--mouse-duration) linear infinite;
-  animation-delay: var(--mouse-delay);
+  animation-name: hero-mouse-rise, hero-mouse-visibility;
+  animation-duration: var(--mouse-duration), 420ms;
+  animation-timing-function: linear, ease;
+  animation-iteration-count: infinite, 1;
+  animation-delay: var(--mouse-delay), 675ms;
+  animation-fill-mode: none, both;
   will-change: transform;
-  opacity: var(--mouse-opacity);
-  z-index: var(--mouse-layer);
+  opacity: 0;
+  z-index: calc(var(--mouse-layer) + 2);
+}
+
+.hero-floating-mice__parallax {
+  width: 100%;
+  height: auto;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
 }
 
 .hero-floating-mice__image {
@@ -78,6 +89,16 @@
       calc(-100vh - calc(var(--mouse-size) * 4.2)),
       0
     );
+  }
+}
+
+@keyframes hero-mouse-visibility {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: var(--mouse-opacity);
   }
 }
 
