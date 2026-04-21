@@ -38,6 +38,6 @@
 
 @media (max-width: 1399px) {
   :root {
-    --subheading-display-size: clamp(1.6875rem, 3.5vw, 2.71875rem);
+    --subheading-display-size: clamp(1.5625rem, 3.15vw, 2.45rem);
   }
 }

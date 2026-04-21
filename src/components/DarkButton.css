@@ -3,7 +3,6 @@
   display: inline-flex;
   align-items: center;
   justify-content: flex-start;
-  min-width: 13.125rem;
   min-height: 2.5625rem;
   padding: 0.1875rem;
   border: none;
@@ -93,6 +92,8 @@
   position: relative;
   width: 0.875rem;
   height: 0.875rem;
+  transform: rotate(var(--button-arrow-rotation, -45deg));
+  transform-origin: center;
 }
 
 .dark-button__arrow::before,

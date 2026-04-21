@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="./src/components/LightButton.css" />
     <link rel="stylesheet" href="./src/components/Navbar.css" />
     <link rel="stylesheet" href="./src/components/PixelHoverTitle.css" />
+    <link rel="stylesheet" href="./src/components/PortfolioSection.css" />
     <link rel="stylesheet" href="./src/components/SiteHeader.css" />
     <link rel="stylesheet" href="./src/components/HeroSection.css" />
     <style>
@@ -37,7 +38,7 @@
             <span class="navbar__logo-main">labs</span>
           </a>
 
-          <nav aria-label="Hauptnavigation">
+          <nav class="navbar__menu-wrap" aria-label="Hauptnavigation">
             <ul class="navbar__menu">
               <li><a class="navbar__link" href="/">PORTFOLIO</a></li>
               <li><a class="navbar__link" href="/">EXPERTISE</a></li>
@@ -238,10 +239,86 @@
         </div>
       </div>
     </section>
-    <section class="page-shell__test-section" aria-label="Test Section"></section>
+    <section class="portfolio-section" aria-label="Portfolio">
+      <div class="portfolio-section__grid">
+        <div class="portfolio-section__media-placeholder">
+          <img
+            class="portfolio-section__media-image portfolio-section__media-image--base"
+            src="./src/assets/images/portfolio-dms-thumbnail.png"
+            alt=""
+            draggable="false"
+          />
+          <a class="portfolio-section__image-button light-button" href="/">
+            <span class="light-button__icon light-button__icon--left" aria-hidden="true">
+              <span class="light-button__arrow"></span>
+            </span>
+            <span class="light-button__content">
+              <span class="light-button__label">ZUR WEBSITE</span>
+            </span>
+            <span class="light-button__icon light-button__icon--right" aria-hidden="true">
+              <span class="light-button__arrow"></span>
+            </span>
+          </a>
+        </div>
+
+        <div class="portfolio-section__content">
+          <div class="portfolio-section__header">
+            <div class="portfolio-section__title-shell">
+              <h2 class="portfolio-section__title">PORTFOLIO</h2>
+            </div>
+            <span class="portfolio-section__index">[2/8]</span>
+          </div>
+
+          <div class="portfolio-section__empty-card">
+            <div class="portfolio-section__meta-row">
+              <span class="portfolio-section__client">[DMS-GRUPPE.DE]</span>
+              <div class="portfolio-section__tags" aria-label="Projektkategorien">
+                <span class="portfolio-section__tag">WEBDESIGN</span>
+                <span class="portfolio-section__tag">SEO</span>
+              </div>
+            </div>
+
+            <h3 class="portfolio-section__case-title">
+              AUTOMATION F&Uuml;R<br />
+              DIE ENERGIEBRANCHE
+            </h3>
+
+            <p class="portfolio-section__case-text">
+              W&auml;rst du offen daf&uuml;r, dass ich dir kostenlos ein konkretes
+              Homepage-Konzept mit Textbeispielen und klarer Websitestruktur ausarbeite,
+              damit deine Website mehr Anfragen und Bewerbungen bekommt?
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="portfolio-section__footer">
+        <p class="portfolio-section__footer-text">
+          <span class="portfolio-section__footer-emphasis">
+            Auf der Suche nach mehr Projekten?
+          </span>
+          Hier gibt es weitere Websites die wir bereits unter anderem Namen erstellt haben.
+        </p>
+        <button class="portfolio-section__pdf-button" type="button">PDF ANSCHAUEN</button>
+      </div>
+    </section>
     <script type="module">
       import { createDecodeTextReveal } from './src/components/createDecodeTextReveal.js';
       import { createPixelHoverTextEffect } from './src/components/createPixelHoverTextEffect.js';
+
+      const lockIntroScroll = () => {
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (reducedMotion) {
+          return;
+        }
+
+        document.body.classList.add('is-intro-scroll-locked');
+
+        window.setTimeout(() => {
+          document.body.classList.remove('is-intro-scroll-locked');
+        }, 3000);
+      };
 
       const fitHeroTitle = () => {
         const track = document.querySelector('.hero__title-track');
@@ -280,6 +357,41 @@
 
         const isMobile = window.matchMedia('(max-width: 767px)').matches;
         label.textContent = isMobile ? label.dataset.mobileLabel : label.dataset.desktopLabel;
+      };
+
+      const fitPortfolioTitle = () => {
+        const header = document.querySelector('.portfolio-section__header');
+        const title = document.querySelector('.portfolio-section__title');
+        const index = document.querySelector('.portfolio-section__index');
+
+        if (!header || !title || !index) {
+          return;
+        }
+
+        const headerStyle = window.getComputedStyle(header);
+        const gap = Number.parseFloat(headerStyle.columnGap) || 0;
+        const paddingX =
+          (Number.parseFloat(headerStyle.paddingLeft) || 0) +
+          (Number.parseFloat(headerStyle.paddingRight) || 0);
+        const availableWidth = header.clientWidth - paddingX - index.offsetWidth - gap;
+        const titleSafeWidth = availableWidth - 12;
+        let low = 24;
+        let high = 160;
+        let best = low;
+
+        while (low <= high) {
+          const mid = Math.floor((low + high) / 2);
+          title.style.fontSize = `${mid}px`;
+
+          if (title.scrollWidth <= titleSafeWidth) {
+            best = mid;
+            low = mid + 1;
+          } else {
+            high = mid - 1;
+          }
+        }
+
+        title.style.fontSize = `${best}px`;
       };
 
       const initHeroMiceParallax = () => {
@@ -363,9 +475,123 @@
         window.addEventListener('resize', setOffset);
       };
 
+      const initPortfolioImageHover = () => {
+        const media = document.querySelector('.portfolio-section__media-placeholder');
+
+        if (!media) {
+          return;
+        }
+
+        media.addEventListener('pointermove', (event) => {
+          const bounds = media.getBoundingClientRect();
+          const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+          const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+
+          media.style.setProperty('--portfolio-image-x', `${x * -1.5}rem`);
+          media.style.setProperty('--portfolio-image-y', `${y * -1.5}rem`);
+        });
+
+        media.addEventListener('pointerleave', () => {
+          media.style.setProperty('--portfolio-image-x', '0rem');
+          media.style.setProperty('--portfolio-image-y', '0rem');
+        });
+      };
+
+      const initPortfolioTitleReveal = () => {
+        const shell = document.querySelector('.portfolio-section__title-shell');
+        const title = document.querySelector('.portfolio-section__title');
+
+        if (!shell || !title) {
+          return;
+        }
+
+        let hasPlayed = false;
+
+        const playReveal = () => {
+          if (hasPlayed) {
+            return;
+          }
+
+          hasPlayed = true;
+          createDecodeTextReveal(shell, title, 'PORTFOLIO', {
+            duration: 1250,
+            scrambleWindow: 0.08,
+          });
+        };
+
+        const observer = new IntersectionObserver(
+          ([entry]) => {
+            if (entry.isIntersecting) {
+              playReveal();
+              observer.disconnect();
+            }
+          },
+          {
+            threshold: 0.35,
+          },
+        );
+
+        observer.observe(shell);
+      };
+
+      const initCompactNavbar = () => {
+        const navbar = document.querySelector('.navbar');
+        const desktopQuery = window.matchMedia('(min-width: 1024px)');
+        let lastScrollY = window.scrollY;
+        let rafId = 0;
+
+        if (!navbar) {
+          return;
+        }
+
+        const updateNavbar = () => {
+          rafId = 0;
+
+          if (!desktopQuery.matches) {
+            navbar.classList.remove('navbar--compact');
+            navbar.classList.remove('navbar--scrolled');
+            lastScrollY = window.scrollY;
+            return;
+          }
+
+          const currentScrollY = window.scrollY;
+          const delta = currentScrollY - lastScrollY;
+
+          if (currentScrollY <= 12) {
+            navbar.classList.remove('navbar--compact');
+            navbar.classList.remove('navbar--scrolled');
+          } else if (delta > 4) {
+            navbar.classList.add('navbar--compact');
+            navbar.classList.add('navbar--scrolled');
+          } else if (delta < -4) {
+            navbar.classList.remove('navbar--compact');
+            navbar.classList.add('navbar--scrolled');
+          } else {
+            navbar.classList.add('navbar--scrolled');
+          }
+
+          lastScrollY = currentScrollY;
+        };
+
+        const requestUpdate = () => {
+          if (!rafId) {
+            rafId = window.requestAnimationFrame(updateNavbar);
+          }
+        };
+
+        updateNavbar();
+        window.addEventListener('scroll', requestUpdate, { passive: true });
+        desktopQuery.addEventListener('change', updateNavbar);
+      };
+
+      lockIntroScroll();
       fitHeroTitle();
       syncLightButtonLabel();
+      fitPortfolioTitle();
       initHeroMiceParallax();
+      initPortfolioImageHover();
+      initPortfolioTitleReveal();
+      initCompactNavbar();
       createPixelHoverTextEffect(
         document.querySelector('.pixel-hover-title'),
         document.querySelector('.pixel-hover-title__text'),
@@ -378,6 +604,7 @@
       );
       window.addEventListener('resize', fitHeroTitle);
       window.addEventListener('resize', syncLightButtonLabel);
+      window.addEventListener('resize', fitPortfolioTitle);
     </script>
   </body>
 </html>

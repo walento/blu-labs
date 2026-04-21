@@ -22,8 +22,3 @@
   justify-content: flex-start;
   width: 100%;
 }
-
-.page-shell__test-section {
-  width: 100%;
-  min-height: 100vh;
-}

@@ -112,9 +112,27 @@ function drawTextTexture(sourceElement, canvas, text) {
   context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
   context.clearRect(0, 0, width, height);
   context.font = `${style.fontStyle} 400 ${style.fontSize} 'Early Gameboy', ${style.fontFamily}`;
-  context.fillStyle = style.color;
   context.textBaseline = 'top';
-  context.fillText(text, 0, 0);
+
+  const strokeWidth =
+    Number.parseFloat(style.getPropertyValue('-webkit-text-stroke-width')) ||
+    Number.parseFloat(style.getPropertyValue('text-stroke-width')) ||
+    0;
+  const strokeColor =
+    style.getPropertyValue('-webkit-text-stroke-color') ||
+    style.getPropertyValue('text-stroke-color') ||
+    style.color;
+
+  if (strokeWidth > 0) {
+    context.lineWidth = strokeWidth;
+    context.strokeStyle = strokeColor;
+    context.strokeText(text, 0, 0);
+  }
+
+  if (style.color !== 'rgba(0, 0, 0, 0)' && style.color !== 'transparent') {
+    context.fillStyle = style.color;
+    context.fillText(text, 0, 0);
+  }
 }
 
 export function createPixelHoverTextEffect(root, sourceElement, text) {
@@ -198,14 +216,6 @@ export function createPixelHoverTextEffect(root, sourceElement, text) {
     target: { x: 0.5, y: 0.5 },
     previous: { x: 0.5, y: 0.5 },
     intensity: 0,
-    autonomous: {
-      active: false,
-      startTime: 0,
-      duration: 0,
-      from: { x: 0.06, y: 0.5 },
-      to: { x: 0.94, y: 0.5 },
-      nextTriggerAt: performance.now() + 2200,
-    },
   };
 
   let rafId = 0;
@@ -247,15 +257,11 @@ export function createPixelHoverTextEffect(root, sourceElement, text) {
   };
 
   const onPointerMove = (event) => {
-    state.autonomous.active = false;
-    state.autonomous.nextTriggerAt = performance.now() + 2800 + Math.random() * 1800;
     state.target = getRelativePosition(event);
     state.intensity = 1;
   };
 
   const onPointerEnter = (event) => {
-    state.autonomous.active = false;
-    state.autonomous.nextTriggerAt = performance.now() + 2800 + Math.random() * 1800;
     const next = getRelativePosition(event);
     state.mouse = next;
     state.target = next;
@@ -275,52 +281,6 @@ export function createPixelHoverTextEffect(root, sourceElement, text) {
   const render = () => {
     if (isDisposed) {
       return;
-    }
-
-    const now = performance.now();
-
-    if (!state.autonomous.active && state.intensity < 0.08 && now >= state.autonomous.nextTriggerAt) {
-      state.autonomous.active = true;
-      state.autonomous.startTime = now;
-      state.autonomous.duration = 960;
-      state.autonomous.from = {
-        x: 0.06,
-        y: 0.5,
-      };
-      state.autonomous.to = {
-        x: 0.94,
-        y: 0.5,
-      };
-      state.mouse = {
-        x: state.autonomous.from.x,
-        y: state.autonomous.from.y,
-      };
-      state.previous = {
-        x: state.autonomous.from.x,
-        y: state.autonomous.from.y,
-      };
-      state.target = {
-        x: state.autonomous.from.x,
-        y: state.autonomous.from.y,
-      };
-      state.intensity = 0;
-    }
-
-    if (state.autonomous.active) {
-      const progress = Math.min((now - state.autonomous.startTime) / state.autonomous.duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-
-      state.target = {
-        x: state.autonomous.from.x + (state.autonomous.to.x - state.autonomous.from.x) * eased,
-        y: state.autonomous.from.y + (state.autonomous.to.y - state.autonomous.from.y) * eased,
-      };
-
-      state.intensity = Math.max(state.intensity, 0.42 * Math.sin(progress * Math.PI));
-
-      if (progress >= 1) {
-        state.autonomous.active = false;
-        state.autonomous.nextTriggerAt = now + 2200;
-      }
     }
 
     state.previous.x += (state.mouse.x - state.previous.x) * 0.18;

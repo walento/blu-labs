@@ -16,6 +16,11 @@ body {
   font-weight: 300;
 }
 
+body.is-intro-scroll-locked {
+  height: 100vh;
+  overflow: hidden;
+}
+
 a {
   font-family: var(--font-body);
   font-weight: 400;

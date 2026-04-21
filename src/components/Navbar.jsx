@@ -3,9 +3,13 @@ import './Navbar.css';
 
 const menuItems = ['PORTFOLIO', 'EXPERTISE', 'ABOUT'];
 
-function Navbar() {
+function Navbar({ isCompact = false, isScrolled = false }) {
   return (
-    <div className="navbar">
+    <div
+      className={`navbar${isCompact ? ' navbar--compact' : ''}${
+        isScrolled ? ' navbar--scrolled' : ''
+      }`}
+    >
       <div className="navbar__left">
         <a className="navbar__logo" href="/" aria-label="blu labs Startseite">
           <span className="navbar__logo-main">blu</span>
@@ -13,7 +17,7 @@ function Navbar() {
           <span className="navbar__logo-main">labs</span>
         </a>
 
-        <nav aria-label="Hauptnavigation">
+        <nav className="navbar__menu-wrap" aria-label="Hauptnavigation">
           <ul className="navbar__menu">
             {menuItems.map((item) => (
               <li key={item}>

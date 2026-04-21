@@ -19,6 +19,9 @@
   overflow: hidden;
   clip-path: inset(0 100% 0 0 round 0.25rem);
   animation: navbar-shell-reveal 720ms cubic-bezier(0.65, 0, 0.35, 1) 1760ms both;
+  transition:
+    gap 720ms cubic-bezier(0.65, 0, 0.35, 1),
+    padding-right 720ms cubic-bezier(0.65, 0, 0.35, 1);
   will-change: clip-path;
 }
 
@@ -46,6 +49,17 @@
   color: var(--color-logo-accent);
 }
 
+.navbar__menu-wrap {
+  display: inline-flex;
+  max-width: 42rem;
+  overflow: hidden;
+  opacity: 1;
+  transition:
+    max-width 720ms cubic-bezier(0.65, 0, 0.35, 1),
+    opacity 360ms ease,
+    transform 720ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+
 .navbar__menu {
   display: inline-flex;
   align-items: center;
@@ -67,6 +81,18 @@
   letter-spacing: 0;
   color: var(--color-black-soft);
   text-transform: uppercase;
+}
+
+.navbar--compact .navbar__left {
+  gap: 0;
+  padding-right: 0.875rem;
+}
+
+.navbar--compact .navbar__menu-wrap {
+  max-width: 0;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-0.75rem);
 }
 
 .navbar__link::after {
@@ -92,6 +118,14 @@
   animation: navbar-content-reveal 420ms ease 2480ms both;
 }
 
+.navbar--scrolled .navbar__cta {
+  background: var(--color-navbar-bg);
+}
+
+.navbar--scrolled .navbar__cta:hover {
+  background: var(--color-white-soft);
+}
+
 @keyframes navbar-shell-reveal {
   0% {
     clip-path: inset(0 100% 0 0 round 0.25rem);
@@ -112,7 +146,7 @@
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1023px) {
   .navbar {
     align-items: center;
     gap: 1rem;
@@ -128,6 +162,10 @@
     display: none;
   }
 
+  .navbar__menu-wrap {
+    display: none;
+  }
+
   .navbar__cta {
     min-width: auto;
   }
@@ -140,6 +178,7 @@
 @media (prefers-reduced-motion: reduce) {
   .navbar__left,
   .navbar__logo,
+  .navbar__menu-wrap,
   .navbar__menu,
   .navbar__cta {
     animation: none;
