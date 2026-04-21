@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef } from 'react';
 import DarkButton from './DarkButton';
+import HeroFloatingMice from './HeroFloatingMice';
 import PixelHoverTitle from './PixelHoverTitle';
 import './HeroSection.css';
 
@@ -58,6 +59,7 @@ function HeroSection() {
 
   return (
     <section className="hero" aria-label="Hero Section">
+      <HeroFloatingMice />
       <div className="hero__inner">
         <div className="hero__content">
           <p className="hero__kicker">

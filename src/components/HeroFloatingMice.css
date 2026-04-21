@@ -1,0 +1,143 @@
+.hero-floating-mice {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.hero-floating-mice__item {
+  position: absolute;
+  left: var(--mouse-left);
+  bottom: calc(var(--mouse-size) * -1.7);
+  width: var(--mouse-size);
+  aspect-ratio: 176 / 222;
+  animation: hero-mouse-rise var(--mouse-duration) linear infinite;
+  animation-delay: var(--mouse-delay);
+  will-change: transform;
+  opacity: var(--mouse-opacity);
+  z-index: var(--mouse-layer);
+}
+
+.hero-floating-mice__image {
+  width: 100%;
+  height: auto;
+  display: block;
+  user-select: none;
+  filter: blur(var(--mouse-blur));
+  transform-origin: center;
+}
+
+.hero-floating-mice__visual {
+  width: 100%;
+  height: auto;
+  display: block;
+  animation: hero-mouse-sway var(--mouse-sway-duration) ease-in-out infinite;
+  animation-delay: var(--mouse-sway-delay);
+  transform-origin: center;
+}
+
+.hero-floating-mice__spin {
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: block;
+  animation: hero-mouse-flight-spin var(--mouse-duration) linear infinite;
+  animation-delay: var(--mouse-delay);
+  transform-origin: center;
+}
+
+.hero-floating-mice__item--foreground .hero-floating-mice__spin {
+  isolation: isolate;
+}
+
+.hero-floating-mice__item--foreground .hero-floating-mice__image:not(.hero-floating-mice__image--fill) {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-floating-mice__image--fill {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  filter: blur(calc(var(--mouse-blur) * 0.35)) brightness(1.04) contrast(0.98);
+  opacity: 1;
+}
+
+@keyframes hero-mouse-rise {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(calc(-50% + calc(var(--mouse-drift-x) * 0.55)), -62vh, 0);
+  }
+
+  100% {
+    transform: translate3d(
+      calc(-50% + var(--mouse-drift-x)),
+      calc(-100vh - calc(var(--mouse-size) * 4.2)),
+      0
+    );
+  }
+}
+
+@keyframes hero-mouse-sway {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(var(--mouse-rotation));
+  }
+
+  25% {
+    transform: translate3d(0.55rem, -0.45rem, 0)
+      rotate(calc(var(--mouse-rotation) + var(--mouse-rotation-drift)));
+  }
+
+  50% {
+    transform: translate3d(-0.35rem, -0.9rem, 0)
+      rotate(calc(var(--mouse-rotation) - calc(var(--mouse-rotation-drift) * 0.6)));
+  }
+
+  75% {
+    transform: translate3d(0.4rem, -0.3rem, 0)
+      rotate(calc(var(--mouse-rotation) + calc(var(--mouse-rotation-drift) * 0.45)));
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) rotate(var(--mouse-rotation));
+  }
+}
+
+@keyframes hero-mouse-flight-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(var(--mouse-spin-turn));
+  }
+}
+
+@media (max-width: 767px) {
+  .hero-floating-mice__item:nth-child(1) {
+    left: 8%;
+  }
+
+  .hero-floating-mice__item:nth-child(2) {
+    left: 28%;
+  }
+
+  .hero-floating-mice__item:nth-child(3) {
+    left: 50%;
+  }
+
+  .hero-floating-mice__item:nth-child(4) {
+    left: 72%;
+  }
+
+  .hero-floating-mice__item:nth-child(5) {
+    left: 92%;
+  }
+
+  .hero-floating-mice__item {
+    width: calc(var(--mouse-size) * 0.72);
+  }
+}

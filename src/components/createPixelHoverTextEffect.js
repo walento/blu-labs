@@ -111,7 +111,7 @@ function drawTextTexture(sourceElement, canvas, text) {
 
   context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
   context.clearRect(0, 0, width, height);
-  context.font = `${style.fontStyle} ${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+  context.font = `${style.fontStyle} 400 ${style.fontSize} 'Early Gameboy', ${style.fontFamily}`;
   context.fillStyle = style.color;
   context.textBaseline = 'top';
   context.fillText(text, 0, 0);

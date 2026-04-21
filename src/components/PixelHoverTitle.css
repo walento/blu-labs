@@ -3,6 +3,9 @@
   display: block;
   width: 100%;
   white-space: nowrap;
+  font-family: 'Early Gameboy', var(--font-heading);
+  font-weight: 400;
+  letter-spacing: -0.05em;
   line-height: 0.88;
   color: var(--color-heading-neon);
 }
@@ -14,6 +17,9 @@
 }
 
 .pixel-hover-title__text {
+  font-family: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
   white-space: nowrap;
   line-height: inherit;
   color: inherit;
