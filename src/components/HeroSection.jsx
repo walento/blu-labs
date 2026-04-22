@@ -67,8 +67,14 @@ function HeroSection() {
     window.addEventListener('resize', requestFitTitle);
 
     if (document.fonts) {
-      document.fonts.load("400 1em 'Early Gameboy'").then(requestFitTitle);
-      document.fonts.ready.then(requestFitTitle);
+      document.fonts.load("400 1em 'Early Gameboy'").then(() => {
+        fitTitle();
+        requestFitTitle();
+      });
+      document.fonts.ready.then(() => {
+        fitTitle();
+        requestFitTitle();
+      });
     }
 
     return () => {

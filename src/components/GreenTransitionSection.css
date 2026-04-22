@@ -1,0 +1,27 @@
+.green-transition-section {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.green-transition-section__tiles {
+  --transition-tile-size: max(8.333vw, 12.5vh);
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.green-transition-section__tile {
+  position: absolute;
+  left: calc(var(--tile-column) * var(--transition-tile-size));
+  top: calc(var(--tile-row) * var(--transition-tile-size));
+  display: block;
+  width: var(--transition-tile-size);
+  height: var(--transition-tile-size);
+  background: var(--color-surface-green);
+  opacity: 0;
+  visibility: hidden;
+  will-change: opacity;
+}

@@ -2,7 +2,18 @@
   position: relative;
   min-height: 100vh;
   width: 100%;
-  overflow: clip;
+  overflow-x: clip;
+}
+
+.page-shell:not(.page-shell--intro-ready) .hero,
+.page-shell:not(.page-shell--intro-ready) .hero::before,
+.page-shell:not(.page-shell--intro-ready) .pixel-hover-title,
+.page-shell:not(.page-shell--intro-ready) .hero__kicker,
+.page-shell:not(.page-shell--intro-ready) .hero__body,
+.page-shell:not(.page-shell--intro-ready) .site-header,
+.page-shell:not(.page-shell--intro-ready) .navbar,
+.page-shell:not(.page-shell--intro-ready) .site-header__cta {
+  animation-play-state: paused;
 }
 
 .page-shell__canvas {

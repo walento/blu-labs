@@ -9,11 +9,14 @@
     <link rel="stylesheet" href="./src/styles/reset.css" />
     <link rel="stylesheet" href="./src/styles/global.css" />
     <link rel="stylesheet" href="./src/components/DarkButton.css" />
+    <link rel="stylesheet" href="./src/components/ExpertiseTransitionTitle.css" />
+    <link rel="stylesheet" href="./src/components/GreenTransitionSection.css" />
     <link rel="stylesheet" href="./src/components/HeroFloatingMice.css" />
     <link rel="stylesheet" href="./src/components/LightButton.css" />
     <link rel="stylesheet" href="./src/components/Navbar.css" />
     <link rel="stylesheet" href="./src/components/PixelHoverTitle.css" />
     <link rel="stylesheet" href="./src/components/PortfolioSection.css" />
+    <link rel="stylesheet" href="./src/components/PortfolioTransitionScene.css" />
     <link rel="stylesheet" href="./src/components/SiteHeader.css" />
     <link rel="stylesheet" href="./src/components/HeroSection.css" />
     <style>
@@ -25,6 +28,17 @@
       .page-shell__test-section {
         width: 100%;
         min-height: 100vh;
+      }
+
+      body:not(.is-intro-ready) .hero,
+      body:not(.is-intro-ready) .hero::before,
+      body:not(.is-intro-ready) .pixel-hover-title,
+      body:not(.is-intro-ready) .hero__kicker,
+      body:not(.is-intro-ready) .hero__body,
+      body:not(.is-intro-ready) .site-header,
+      body:not(.is-intro-ready) .navbar,
+      body:not(.is-intro-ready) .site-header__cta {
+        animation-play-state: paused;
       }
     </style>
   </head>
@@ -239,9 +253,11 @@
         </div>
       </div>
     </section>
-    <section class="portfolio-section" aria-label="Portfolio">
-      <div class="portfolio-section__grid">
-        <div class="portfolio-section__media-placeholder">
+    <section class="portfolio-transition-scene">
+      <div class="portfolio-transition-scene__sticky">
+        <section class="portfolio-section" aria-label="Portfolio">
+          <div class="portfolio-section__grid">
+            <div class="portfolio-section__media-placeholder">
           <img
             class="portfolio-section__media-image portfolio-section__media-image--base"
             src="./src/assets/images/portfolio-dms-thumbnail.png"
@@ -260,47 +276,57 @@
               <span class="light-button__arrow"></span>
             </span>
           </a>
-        </div>
-
-        <div class="portfolio-section__content">
-          <div class="portfolio-section__header">
-            <div class="portfolio-section__title-shell">
-              <h2 class="portfolio-section__title">PORTFOLIO</h2>
             </div>
-            <span class="portfolio-section__index">[2/8]</span>
-          </div>
 
-          <div class="portfolio-section__empty-card">
-            <div class="portfolio-section__meta-row">
-              <span class="portfolio-section__client">[DMS-GRUPPE.DE]</span>
-              <div class="portfolio-section__tags" aria-label="Projektkategorien">
-                <span class="portfolio-section__tag">WEBDESIGN</span>
-                <span class="portfolio-section__tag">SEO</span>
+            <div class="portfolio-section__content">
+              <div class="portfolio-section__header">
+                <div class="portfolio-section__title-shell">
+                  <h2 class="portfolio-section__title">PORTFOLIO</h2>
+                </div>
+                <span class="portfolio-section__index">[2/8]</span>
+              </div>
+
+              <div class="portfolio-section__empty-card">
+                <div class="portfolio-section__meta-row">
+                  <span class="portfolio-section__client">[DMS-GRUPPE.DE]</span>
+                  <div class="portfolio-section__tags" aria-label="Projektkategorien">
+                    <span class="portfolio-section__tag">WEBDESIGN</span>
+                    <span class="portfolio-section__tag">SEO</span>
+                  </div>
+                </div>
+
+                <h3 class="portfolio-section__case-title">
+                  AUTOMATION F&Uuml;R<br />
+                  DIE ENERGIEBRANCHE
+                </h3>
+
+                <p class="portfolio-section__case-text">
+                  W&auml;rst du offen daf&uuml;r, dass ich dir kostenlos ein konkretes
+                  Homepage-Konzept mit Textbeispielen und klarer Websitestruktur ausarbeite,
+                  damit deine Website mehr Anfragen und Bewerbungen bekommt?
+                </p>
               </div>
             </div>
+          </div>
 
-            <h3 class="portfolio-section__case-title">
-              AUTOMATION F&Uuml;R<br />
-              DIE ENERGIEBRANCHE
-            </h3>
-
-            <p class="portfolio-section__case-text">
-              W&auml;rst du offen daf&uuml;r, dass ich dir kostenlos ein konkretes
-              Homepage-Konzept mit Textbeispielen und klarer Websitestruktur ausarbeite,
-              damit deine Website mehr Anfragen und Bewerbungen bekommt?
+          <div class="portfolio-section__footer">
+            <p class="portfolio-section__footer-text">
+              <span class="portfolio-section__footer-emphasis">
+                Auf der Suche nach mehr Projekten?
+              </span>
+              Hier gibt es weitere Websites die wir bereits unter anderem Namen erstellt haben.
             </p>
+            <button class="portfolio-section__pdf-button" type="button">PDF ANSCHAUEN</button>
+          </div>
+        </section>
+        <div class="green-transition-section" aria-hidden="true">
+        <div class="green-transition-section__tiles"></div>
+        </div>
+        <div class="expertise-title-track">
+          <div class="expertise-title pixel-hover-title expertise-title--hidden">
+            <h2 class="expertise-title__text pixel-hover-title__text">EXPERTISE</h2>
           </div>
         </div>
-      </div>
-
-      <div class="portfolio-section__footer">
-        <p class="portfolio-section__footer-text">
-          <span class="portfolio-section__footer-emphasis">
-            Auf der Suche nach mehr Projekten?
-          </span>
-          Hier gibt es weitere Websites die wir bereits unter anderem Namen erstellt haben.
-        </p>
-        <button class="portfolio-section__pdf-button" type="button">PDF ANSCHAUEN</button>
       </div>
     </section>
     <script type="module">
@@ -310,16 +336,45 @@
 
       const lockIntroScroll = () => {
         const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const releaseScrollLock = () => {
+          document.body.classList.remove('is-intro-scroll-locked');
+        };
+        const startIntro = () => {
+          window.scrollTo(0, 0);
+          document.body.classList.add('is-intro-ready');
+
+          window.setTimeout(releaseScrollLock, 3000);
+        };
+        const startIntroAfterNextPaint = () => {
+          window.requestAnimationFrame(() => {
+            window.requestAnimationFrame(startIntro);
+          });
+        };
+
+        if ('scrollRestoration' in window.history) {
+          window.history.scrollRestoration = 'manual';
+        }
+
+        window.scrollTo(0, 0);
 
         if (reducedMotion) {
+          document.body.classList.add('is-intro-ready');
+          releaseScrollLock();
           return;
         }
 
         document.body.classList.add('is-intro-scroll-locked');
 
-        window.setTimeout(() => {
-          document.body.classList.remove('is-intro-scroll-locked');
-        }, 3000);
+        if (document.fonts) {
+          Promise.all([
+            document.fonts.load("400 1em 'Early Gameboy'"),
+            document.fonts.ready,
+          ])
+            .then(startIntroAfterNextPaint)
+            .catch(startIntroAfterNextPaint);
+        } else {
+          window.addEventListener('load', startIntroAfterNextPaint, { once: true });
+        }
       };
 
       const fitHeroTitle = () => {
@@ -534,6 +589,369 @@
         observer.observe(shell);
       };
 
+      const initGreenTransition = () => {
+        const scene = document.querySelector('.portfolio-transition-scene');
+        const tilesContainer = document.querySelector('.green-transition-section__tiles');
+
+        if (!scene || !tilesContainer) {
+          return;
+        }
+
+        const columns = 12;
+        const rows = 8;
+        const total = columns * rows;
+        const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+        const seededNoise = (value) => {
+          const noise = Math.sin(value * 91.345 + 17.17) * 10000;
+          return noise - Math.floor(noise);
+        };
+
+        const getNeighborIndexes = (index) => {
+          const column = index % columns;
+          const row = Math.floor(index / columns);
+          const neighbors = [];
+
+          if (column > 0) {
+            neighbors.push(index - 1);
+          }
+
+          if (column < columns - 1) {
+            neighbors.push(index + 1);
+          }
+
+          if (row > 0) {
+            neighbors.push(index - columns);
+          }
+
+          if (row < rows - 1) {
+            neighbors.push(index + columns);
+          }
+
+          return neighbors;
+        };
+
+        const createConnectedOrder = () => {
+          const centerColumn = Math.floor(columns / 2);
+          const centerRow = Math.floor(rows / 2);
+          const startIndex = centerRow * columns + centerColumn;
+          const visited = new Set([startIndex]);
+          const order = [startIndex];
+          let currentIndex = startIndex;
+
+          while (order.length < total) {
+            const directNeighbors = getNeighborIndexes(currentIndex).filter((neighborIndex) => !visited.has(neighborIndex));
+            let nextIndex;
+
+            if (directNeighbors.length > 0) {
+              const pick = Math.floor(seededNoise(order.length * 23 + currentIndex * 5) * directNeighbors.length);
+              nextIndex = directNeighbors[pick];
+            } else {
+              const frontier = order
+                .flatMap((tileIndex) => getNeighborIndexes(tileIndex))
+                .filter((neighborIndex) => !visited.has(neighborIndex));
+
+              if (frontier.length === 0) {
+                break;
+              }
+
+              const pick = Math.floor(seededNoise(order.length * 19 + frontier.length * 7) * frontier.length);
+              nextIndex = frontier[pick];
+            }
+
+            visited.add(nextIndex);
+            order.push(nextIndex);
+            currentIndex = nextIndex;
+          }
+
+          return order;
+        };
+
+        const order = createConnectedOrder();
+        const orderMap = new Map(order.map((tileIndex, orderIndex) => [tileIndex, orderIndex]));
+        const tiles = Array.from({ length: total }, (_, index) => {
+          const column = index % columns;
+          const row = Math.floor(index / columns);
+          const orderIndex = orderMap.get(index) || 0;
+          const connectedStart = orderIndex / (total - 1);
+          const tile = document.createElement('span');
+
+          tile.className = 'green-transition-section__tile';
+          tile.style.setProperty('--tile-column', column);
+          tile.style.setProperty('--tile-row', row);
+          tile.dataset.start = clamp(0.2 + connectedStart * 0.7, 0.2, 0.9);
+          tilesContainer.appendChild(tile);
+
+          return tile;
+        });
+
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          tiles.forEach((tile) => {
+            tile.style.opacity = '1';
+            tile.style.visibility = 'visible';
+          });
+          return;
+        }
+
+        let frameId = 0;
+        let mobileTriggerStart = null;
+        let animationFrameId = 0;
+        let currentProgress = 0;
+        let targetProgress = 0;
+        let animationStartedAt = 0;
+        let animationFrom = 0;
+
+        const setTilesByProgress = (progress) => {
+          const isCovered = progress >= 0.995;
+
+          scene.classList.toggle('portfolio-transition-scene--green-covered', isCovered);
+
+          tiles.forEach((tile) => {
+            const start = Number.parseFloat(tile.dataset.start || '0');
+            const isVisible = progress >= start;
+
+            tile.style.opacity = isVisible ? '1' : '0';
+            tile.style.visibility = isVisible ? 'visible' : 'hidden';
+          });
+        };
+
+        let releaseScrollInputPause = () => {};
+        const scrollKeys = new Set([
+          ' ',
+          'ArrowDown',
+          'ArrowLeft',
+          'ArrowRight',
+          'ArrowUp',
+          'End',
+          'Home',
+          'PageDown',
+          'PageUp',
+        ]);
+
+        const pauseScrollInput = () => {
+          const stopScrollInput = (event) => {
+            event.preventDefault();
+          };
+          const stopScrollKey = (event) => {
+            if (scrollKeys.has(event.key)) {
+              event.preventDefault();
+            }
+          };
+
+          window.addEventListener('wheel', stopScrollInput, { passive: false });
+          window.addEventListener('touchmove', stopScrollInput, { passive: false });
+          window.addEventListener('keydown', stopScrollKey);
+
+          releaseScrollInputPause = () => {
+            window.removeEventListener('wheel', stopScrollInput);
+            window.removeEventListener('touchmove', stopScrollInput);
+            window.removeEventListener('keydown', stopScrollKey);
+            releaseScrollInputPause = () => {};
+          };
+        };
+
+        const setTargetProgress = (nextTarget) => {
+          if (targetProgress === nextTarget) {
+            return;
+          }
+
+          releaseScrollInputPause();
+          pauseScrollInput();
+          targetProgress = nextTarget;
+          animationFrom = currentProgress;
+          animationStartedAt = performance.now();
+        };
+
+        const animateToTarget = () => {
+          const duration = 1050;
+          const elapsed = performance.now() - animationStartedAt;
+          const linearProgress = clamp(elapsed / duration, 0, 1);
+          const easedProgress =
+            linearProgress < 0.5
+              ? 4 * linearProgress ** 3
+              : 1 - ((-2 * linearProgress + 2) ** 3) / 2;
+
+          currentProgress = animationFrom + (targetProgress - animationFrom) * easedProgress;
+          setTilesByProgress(currentProgress);
+
+          if (linearProgress >= 1) {
+            currentProgress = targetProgress;
+            setTilesByProgress(currentProgress);
+            animationFrameId = 0;
+            releaseScrollInputPause();
+            return;
+          }
+
+          animationFrameId = window.requestAnimationFrame(animateToTarget);
+        };
+
+        const requestTileAnimation = () => {
+          if (animationFrameId) {
+            return;
+          }
+
+          animationFrameId = window.requestAnimationFrame(animateToTarget);
+        };
+
+        const updateTransition = () => {
+          frameId = 0;
+
+          const rect = scene.getBoundingClientRect();
+          const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+          const scrollableDistance = Math.max(rect.height - viewportHeight, 1);
+          const sticky = scene.querySelector('.portfolio-transition-scene__sticky');
+          const portfolio = scene.querySelector('.portfolio-section');
+          const sceneScroll = Math.max(0 - rect.top, 0);
+          const isMobileTransition = window.matchMedia('(max-width: 1023px)').matches;
+          const currentMobileOffset =
+            sticky ? Number.parseFloat(window.getComputedStyle(sticky).getPropertyValue('--portfolio-mobile-scroll-offset')) || 0 : 0;
+          const stickyBottom = sticky ? sticky.getBoundingClientRect().bottom : viewportHeight;
+          const portfolioBottomAtRest = portfolio ? portfolio.getBoundingClientRect().bottom - currentMobileOffset : 0;
+          const portfolioRevealDistance =
+            sticky && portfolio
+              ? Math.max(portfolioBottomAtRest - stickyBottom, 0)
+              : 0;
+          const projectedPortfolioBottom = portfolioBottomAtRest - Math.min(sceneScroll, portfolioRevealDistance);
+
+          if (projectedPortfolioBottom > stickyBottom) {
+            mobileTriggerStart = null;
+          } else if (mobileTriggerStart === null) {
+            mobileTriggerStart = sceneScroll;
+          }
+
+          const holdDistance = isMobileTransition
+            ? mobileTriggerStart === null
+              ? Number.POSITIVE_INFINITY
+              : mobileTriggerStart + viewportHeight * 0.22
+            : mobileTriggerStart === null
+              ? Number.POSITIVE_INFINITY
+              : mobileTriggerStart + viewportHeight * 0.08;
+          const revealDistance = Math.max(scrollableDistance - holdDistance, 1);
+          const scrollProgress = clamp((0 - rect.top - holdDistance) / revealDistance, 0, 1);
+          const mobilePortfolioOffset =
+            portfolioRevealDistance > 0 ? -clamp(sceneScroll / portfolioRevealDistance, 0, 1) * portfolioRevealDistance : 0;
+
+          sticky?.style.setProperty('--portfolio-mobile-scroll-offset', `${mobilePortfolioOffset}px`);
+
+          setTargetProgress(scrollProgress >= 0.08 ? 1 : 0);
+          requestTileAnimation();
+        };
+
+        const requestUpdate = () => {
+          if (frameId) {
+            return;
+          }
+
+          frameId = window.requestAnimationFrame(updateTransition);
+        };
+
+        updateTransition();
+        window.addEventListener('scroll', requestUpdate, { passive: true });
+        window.addEventListener('resize', requestUpdate);
+      };
+
+      const initExpertiseTitle = () => {
+        const scene = document.querySelector('.portfolio-transition-scene');
+        const track = document.querySelector('.expertise-title-track');
+        const root = document.querySelector('.expertise-title');
+        const title = document.querySelector('.expertise-title__text');
+        const finalText = 'EXPERTISE';
+
+        if (!scene || !track || !root || !title) {
+          return;
+        }
+
+        const fitTitle = () => {
+          const availableWidth = track.clientWidth;
+
+          if (!availableWidth) {
+            return;
+          }
+
+          let low = 24;
+          let high = 320;
+          let best = low;
+
+          while (low <= high) {
+            const mid = Math.floor((low + high) / 2);
+            title.style.fontSize = `${mid}px`;
+
+            if (title.scrollWidth <= availableWidth) {
+              best = mid;
+              low = mid + 1;
+            } else {
+              high = mid - 1;
+            }
+          }
+
+          title.style.fontSize = `${best}px`;
+          root.__pixelHoverUpdateText?.(title.textContent || finalText);
+        };
+
+        let isVisible = false;
+        let destroyDecode = () => {};
+
+        const revealTitle = () => {
+          if (isVisible) {
+            return;
+          }
+
+          isVisible = true;
+          destroyDecode();
+          title.textContent = finalText;
+          root.__pixelHoverUpdateText?.(finalText);
+          root.classList.add('expertise-title--visible');
+          root.classList.remove('expertise-title--hidden');
+          root.classList.remove('pixel-hover-title--decoded');
+          root.classList.remove('pixel-hover-title--decoding');
+          destroyDecode = createDecodeTextReveal(root, title, finalText, {
+            duration: 1550,
+            scrambleWindow: 0.1,
+          });
+        };
+
+        const hideTitle = () => {
+          if (!isVisible) {
+            return;
+          }
+
+          isVisible = false;
+          destroyDecode();
+          destroyDecode = () => {};
+          root.classList.remove('expertise-title--visible');
+          root.classList.add('expertise-title--hidden');
+          root.classList.remove('pixel-hover-title--decoded');
+          root.classList.remove('pixel-hover-title--decoding');
+          title.textContent = finalText;
+          root.__pixelHoverUpdateText?.(finalText);
+        };
+
+        const syncTitle = () => {
+          if (scene.classList.contains('portfolio-transition-scene--green-covered')) {
+            revealTitle();
+          } else {
+            hideTitle();
+          }
+        };
+
+        fitTitle();
+        createPixelHoverTextEffect(root, title, finalText);
+        syncTitle();
+        new MutationObserver(syncTitle).observe(scene, {
+          attributeFilter: ['class'],
+          attributes: true,
+        });
+
+        window.addEventListener('resize', () => {
+          fitTitle();
+          syncTitle();
+        });
+
+        if (document.fonts) {
+          document.fonts.load("400 1em 'Early Gameboy'").then(fitTitle);
+          document.fonts.ready.then(fitTitle);
+        }
+      };
+
       const initCompactNavbar = () => {
         const navbar = document.querySelector('.navbar');
         const desktopQuery = window.matchMedia('(min-width: 1024px)');
@@ -593,6 +1011,8 @@
       initHeroMiceParallax();
       createPortfolioPixelTrail(document.querySelector('.portfolio-section__media-placeholder'));
       initPortfolioTitleReveal();
+      initGreenTransition();
+      initExpertiseTitle();
       initCompactNavbar();
       createPixelHoverTextEffect(
         document.querySelector('.pixel-hover-title'),
@@ -605,8 +1025,14 @@
         'WEBDESIGN'
       );
       if (document.fonts) {
-        document.fonts.load("400 1em 'Early Gameboy'").then(requestHeroTitleFit);
-        document.fonts.ready.then(requestHeroTitleFit);
+        document.fonts.load("400 1em 'Early Gameboy'").then(() => {
+          fitHeroTitle();
+          requestHeroTitleFit();
+        });
+        document.fonts.ready.then(() => {
+          fitHeroTitle();
+          requestHeroTitleFit();
+        });
         document.fonts.load("400 1em 'Early Gameboy'").then(requestPortfolioTitleFit);
         document.fonts.ready.then(requestPortfolioTitleFit);
       }

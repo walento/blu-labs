@@ -61,6 +61,16 @@ export function createPortfolioPixelTrail(root) {
     }, 10900);
   };
 
+  const clearPixels = () => {
+    state.timeouts.forEach((timeoutId) => window.clearTimeout(timeoutId));
+    state.timeouts.clear();
+    layer.replaceChildren();
+    state.paintedCells.clear();
+    state.lastCellX = -1;
+    state.lastCellY = -1;
+    state.isAutoRunning = false;
+  };
+
   const createSnakeRoute = (columns, rows) => {
     const horizontal = Math.random() > 0.35;
     const route = [];
@@ -129,6 +139,10 @@ export function createPortfolioPixelTrail(root) {
   };
 
   const handlePointerMove = (event) => {
+    if (root.closest('.portfolio-transition-scene--green-covered')) {
+      return;
+    }
+
     const bounds = root.getBoundingClientRect();
     const size = getPixelSize(bounds);
     const cellX = Math.floor((event.clientX - bounds.left) / size);
@@ -177,7 +191,7 @@ export function createPortfolioPixelTrail(root) {
     ([entry]) => {
       state.isVisible = entry.isIntersecting;
 
-      if (state.isVisible) {
+      if (state.isVisible && !root.closest('.portfolio-transition-scene--green-covered')) {
         runAutoSnake();
       }
     },
@@ -186,13 +200,26 @@ export function createPortfolioPixelTrail(root) {
 
   observer.observe(root);
 
+  const coveredObserver = new MutationObserver(() => {
+    if (root.closest('.portfolio-transition-scene--green-covered')) {
+      clearPixels();
+    }
+  });
+
+  const scene = root.closest('.portfolio-transition-scene');
+
+  if (scene) {
+    coveredObserver.observe(scene, {
+      attributeFilter: ['class'],
+      attributes: true,
+    });
+  }
+
   return () => {
     root.removeEventListener('pointermove', handlePointerMove);
     root.removeEventListener('pointerleave', handlePointerLeave);
     observer.disconnect();
-    state.timeouts.forEach((timeoutId) => window.clearTimeout(timeoutId));
-    state.timeouts.clear();
-    layer.replaceChildren();
-    state.paintedCells.clear();
+    coveredObserver.disconnect();
+    clearPixels();
   };
 }
