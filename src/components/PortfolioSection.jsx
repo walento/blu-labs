@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useRef } from 'react';
 import portfolioImage from '../assets/images/portfolio-dms-thumbnail.png';
 import { createDecodeTextReveal } from './createDecodeTextReveal';
+import { createPortfolioPixelTrail } from './createPortfolioPixelTrail';
 import './PortfolioSection.css';
 
 function PortfolioSection() {
@@ -19,6 +20,9 @@ function PortfolioSection() {
       return undefined;
     }
 
+    let frameId = 0;
+    let isDisposed = false;
+
     const fitTitle = () => {
       const headerStyle = window.getComputedStyle(header);
       const gap = Number.parseFloat(headerStyle.columnGap) || 0;
@@ -28,7 +32,7 @@ function PortfolioSection() {
       const availableWidth = header.clientWidth - paddingX - index.offsetWidth - gap;
       const titleSafeWidth = availableWidth - 12;
 
-      if (!titleSafeWidth) {
+      if (titleSafeWidth <= 0) {
         return;
       }
 
@@ -51,15 +55,34 @@ function PortfolioSection() {
       title.style.fontSize = `${best}px`;
     };
 
-    fitTitle();
+    const requestFitTitle = () => {
+      window.cancelAnimationFrame(frameId);
+      frameId = window.requestAnimationFrame(() => {
+        if (!isDisposed) {
+          fitTitle();
+        }
+      });
+    };
 
-    const observer = new ResizeObserver(fitTitle);
+    fitTitle();
+    requestFitTitle();
+
+    const observer = new ResizeObserver(requestFitTitle);
     observer.observe(header);
-    window.addEventListener('resize', fitTitle);
+    window.addEventListener('load', requestFitTitle);
+    window.addEventListener('resize', requestFitTitle);
+
+    if (document.fonts) {
+      document.fonts.load("400 1em 'Early Gameboy'").then(requestFitTitle);
+      document.fonts.ready.then(requestFitTitle);
+    }
 
     return () => {
+      isDisposed = true;
+      window.cancelAnimationFrame(frameId);
       observer.disconnect();
-      window.removeEventListener('resize', fitTitle);
+      window.removeEventListener('load', requestFitTitle);
+      window.removeEventListener('resize', requestFitTitle);
     };
   }, []);
 
@@ -106,39 +129,21 @@ function PortfolioSection() {
     };
   }, []);
 
-  const handleMediaPointerMove = (event) => {
+  useEffect(() => {
     const media = mediaRef.current;
 
     if (!media) {
-      return;
+      return undefined;
     }
 
-    const bounds = media.getBoundingClientRect();
-    const x = (event.clientX - bounds.left) / bounds.width - 0.5;
-    const y = (event.clientY - bounds.top) / bounds.height - 0.5;
-
-    media.style.setProperty('--portfolio-image-x', `${x * -1.5}rem`);
-    media.style.setProperty('--portfolio-image-y', `${y * -1.5}rem`);
-  };
-
-  const handleMediaPointerLeave = () => {
-    const media = mediaRef.current;
-
-    if (!media) {
-      return;
-    }
-
-    media.style.setProperty('--portfolio-image-x', '0rem');
-    media.style.setProperty('--portfolio-image-y', '0rem');
-  };
+    return createPortfolioPixelTrail(media);
+  }, []);
 
   return (
     <section className="portfolio-section" aria-label="Portfolio">
       <div className="portfolio-section__grid">
         <div
           className="portfolio-section__media-placeholder"
-          onPointerLeave={handleMediaPointerLeave}
-          onPointerMove={handleMediaPointerMove}
           ref={mediaRef}
         >
           <img
@@ -147,6 +152,7 @@ function PortfolioSection() {
             alt=""
             draggable="false"
           />
+          <div className="portfolio-section__pixel-trail" aria-hidden="true" />
           <a className="portfolio-section__image-button light-button" href="/">
             <span
               className="light-button__icon light-button__icon--left"

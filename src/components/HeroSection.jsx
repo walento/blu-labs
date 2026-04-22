@@ -16,6 +16,9 @@ function HeroSection() {
       return undefined;
     }
 
+    let frameId = 0;
+    let isDisposed = false;
+
     const fitTitle = () => {
       const availableWidth = track.clientWidth;
 
@@ -40,20 +43,40 @@ function HeroSection() {
       }
 
       title.style.fontSize = `${best}px`;
+      title.parentElement?.__pixelHoverUpdateText?.('WEBDESIGN');
+    };
+
+    const requestFitTitle = () => {
+      window.cancelAnimationFrame(frameId);
+      frameId = window.requestAnimationFrame(() => {
+        if (!isDisposed) {
+          fitTitle();
+        }
+      });
     };
 
     fitTitle();
+    requestFitTitle();
 
     const observer = new ResizeObserver(() => {
-      fitTitle();
+      requestFitTitle();
     });
 
     observer.observe(track);
-    window.addEventListener('resize', fitTitle);
+    window.addEventListener('load', requestFitTitle);
+    window.addEventListener('resize', requestFitTitle);
+
+    if (document.fonts) {
+      document.fonts.load("400 1em 'Early Gameboy'").then(requestFitTitle);
+      document.fonts.ready.then(requestFitTitle);
+    }
 
     return () => {
+      isDisposed = true;
+      window.cancelAnimationFrame(frameId);
       observer.disconnect();
-      window.removeEventListener('resize', fitTitle);
+      window.removeEventListener('load', requestFitTitle);
+      window.removeEventListener('resize', requestFitTitle);
     };
   }, []);
 
