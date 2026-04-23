@@ -5,6 +5,10 @@ import './GreenTransitionSection.css';
 const TILE_COLUMNS = 12;
 const TILE_ROWS = 8;
 const TILE_TOTAL = TILE_COLUMNS * TILE_ROWS;
+const FORWARD_TRIGGER_PROGRESS = 0.08;
+const BACKWARD_TRIGGER_PROGRESS = 0.02;
+const FORWARD_LOCK_PROGRESS = 0.1;
+const BACKWARD_LOCK_PROGRESS = 0.01;
 
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
@@ -81,6 +85,7 @@ function GreenTransitionSection({ sceneRef }) {
   const targetProgressRef = useRef(0);
   const autoAnimationStartedAtRef = useRef(0);
   const autoAnimationFromRef = useRef(0);
+  const lockedScrollYRef = useRef(null);
 
   const tiles = useMemo(() => {
     const order = createConnectedOrder();
@@ -118,8 +123,13 @@ function GreenTransitionSection({ sceneRef }) {
 
     const setTilesByProgress = (progress) => {
       const isCovered = progress >= 0.995;
+      const sticky = scene.querySelector('.portfolio-transition-scene__sticky');
+      const overlayScale = 1 - progress * 0.3;
+      const overlayBlur = progress * 16;
 
       scene.classList.toggle('portfolio-transition-scene--green-covered', isCovered);
+      sticky?.style.setProperty('--portfolio-overlay-scale', `${overlayScale}`);
+      sticky?.style.setProperty('--portfolio-overlay-blur', `${overlayBlur}px`);
 
       activeTiles.forEach((tile) => {
         const start = Number.parseFloat(tile.dataset.start || '0');
@@ -167,7 +177,7 @@ function GreenTransitionSection({ sceneRef }) {
       };
     };
 
-    const setTargetProgress = (nextTarget) => {
+    const setTargetProgress = (nextTarget, lockedScrollY) => {
       if (targetProgressRef.current === nextTarget) {
         return;
       }
@@ -177,6 +187,7 @@ function GreenTransitionSection({ sceneRef }) {
       targetProgressRef.current = nextTarget;
       autoAnimationFromRef.current = progressRef.current;
       autoAnimationStartedAtRef.current = performance.now();
+      lockedScrollYRef.current = lockedScrollY;
     };
 
     const animateToTarget = () => {
@@ -188,6 +199,13 @@ function GreenTransitionSection({ sceneRef }) {
           ? 4 * linearProgress ** 3
           : 1 - ((-2 * linearProgress + 2) ** 3) / 2;
 
+      if (typeof lockedScrollYRef.current === 'number') {
+        window.scrollTo({
+          top: lockedScrollYRef.current,
+          behavior: 'auto',
+        });
+      }
+
       progressRef.current =
         autoAnimationFromRef.current +
         (targetProgressRef.current - autoAnimationFromRef.current) * easedProgress;
@@ -197,6 +215,13 @@ function GreenTransitionSection({ sceneRef }) {
         progressRef.current = targetProgressRef.current;
         setTilesByProgress(progressRef.current);
         animationFrameRef.current = 0;
+        if (typeof lockedScrollYRef.current === 'number') {
+          window.scrollTo({
+            top: lockedScrollYRef.current,
+            behavior: 'auto',
+          });
+        }
+        lockedScrollYRef.current = null;
         releaseScrollInputPause();
         return;
       }
@@ -220,6 +245,7 @@ function GreenTransitionSection({ sceneRef }) {
       const rect = scene.getBoundingClientRect();
       const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
       const scrollableDistance = Math.max(rect.height - viewportHeight, 1);
+      const sceneTopAbsolute = window.scrollY + rect.top;
       const sticky = scene.querySelector('.portfolio-transition-scene__sticky');
       const portfolio = scene.querySelector('.portfolio-section');
       const sceneScroll = Math.max(0 - rect.top, 0);
@@ -247,12 +273,29 @@ function GreenTransitionSection({ sceneRef }) {
           : mobileTriggerStartRef.current + startBuffer;
       const revealDistance = Math.max(scrollableDistance - holdDistance, 1);
       const scrollProgress = clamp((0 - rect.top - holdDistance) / revealDistance, 0, 1);
+      const nextTarget =
+        targetProgressRef.current >= 0.5
+          ? scrollProgress > BACKWARD_TRIGGER_PROGRESS
+            ? 1
+            : 0
+          : scrollProgress >= FORWARD_TRIGGER_PROGRESS
+            ? 1
+            : 0;
+      const lockedProgress =
+        nextTarget === 1 ? FORWARD_LOCK_PROGRESS : BACKWARD_LOCK_PROGRESS;
+      const transitionThresholdScroll = clamp(
+        nextTarget === 1
+          ? Math.max(window.scrollY, sceneTopAbsolute + holdDistance + revealDistance * lockedProgress)
+          : Math.min(window.scrollY, sceneTopAbsolute + holdDistance + revealDistance * lockedProgress),
+        sceneTopAbsolute,
+        sceneTopAbsolute + scrollableDistance,
+      );
       const mobilePortfolioOffset =
         portfolioRevealDistance > 0 ? -clamp(sceneScroll / portfolioRevealDistance, 0, 1) * portfolioRevealDistance : 0;
 
       sticky?.style.setProperty('--portfolio-mobile-scroll-offset', `${mobilePortfolioOffset}px`);
 
-      setTargetProgress(scrollProgress >= 0.08 ? 1 : 0);
+      setTargetProgress(nextTarget, transitionThresholdScroll);
       requestAnimation();
     };
 

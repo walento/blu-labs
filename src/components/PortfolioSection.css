@@ -276,6 +276,12 @@
   }
 }
 
+@media (min-width: 1440px) {
+  .portfolio-section {
+    min-height: auto;
+  }
+}
+
 @media (max-width: 767px) {
   .portfolio-section__image-button {
     left: 1.5rem;

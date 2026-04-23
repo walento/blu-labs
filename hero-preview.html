@@ -25,7 +25,7 @@
         padding: 0.625rem;
       }
 
-      .page-shell__test-section {
+      .page-shell__next-section {
         width: 100%;
         min-height: 100vh;
       }
@@ -258,24 +258,24 @@
         <section class="portfolio-section" aria-label="Portfolio">
           <div class="portfolio-section__grid">
             <div class="portfolio-section__media-placeholder">
-          <img
-            class="portfolio-section__media-image portfolio-section__media-image--base"
-            src="./src/assets/images/portfolio-dms-thumbnail.png"
-            alt=""
-            draggable="false"
-          />
-          <div class="portfolio-section__pixel-trail" aria-hidden="true"></div>
-          <a class="portfolio-section__image-button light-button" href="/">
-            <span class="light-button__icon light-button__icon--left" aria-hidden="true">
-              <span class="light-button__arrow"></span>
-            </span>
-            <span class="light-button__content">
-              <span class="light-button__label">ZUR WEBSITE</span>
-            </span>
-            <span class="light-button__icon light-button__icon--right" aria-hidden="true">
-              <span class="light-button__arrow"></span>
-            </span>
-          </a>
+              <img
+                class="portfolio-section__media-image portfolio-section__media-image--base"
+                src="./src/assets/images/portfolio-dms-thumbnail.png"
+                alt=""
+                draggable="false"
+              />
+              <div class="portfolio-section__pixel-trail" aria-hidden="true"></div>
+              <a class="portfolio-section__image-button light-button" href="/">
+                <span class="light-button__icon light-button__icon--left" aria-hidden="true">
+                  <span class="light-button__arrow"></span>
+                </span>
+                <span class="light-button__content">
+                  <span class="light-button__label">ZUR WEBSITE</span>
+                </span>
+                <span class="light-button__icon light-button__icon--right" aria-hidden="true">
+                  <span class="light-button__arrow"></span>
+                </span>
+              </a>
             </div>
 
             <div class="portfolio-section__content">
@@ -319,20 +319,68 @@
             <button class="portfolio-section__pdf-button" type="button">PDF ANSCHAUEN</button>
           </div>
         </section>
+
         <div class="green-transition-section" aria-hidden="true">
-        <div class="green-transition-section__tiles"></div>
+          <div class="green-transition-section__tiles"></div>
         </div>
+
         <div class="expertise-title-track">
-          <div class="expertise-title pixel-hover-title expertise-title--hidden">
-            <h2 class="expertise-title__text pixel-hover-title__text">EXPERTISE</h2>
+          <div class="expertise-title expertise-title--hidden">
+            <h2 class="expertise-title__text">EXPERTISE</h2>
+          </div>
+          <div class="expertise-intro expertise-intro--hidden">
+            <p class="expertise-intro__text">
+              W&auml;rst du offen daf&uuml;r, dass ich dir kostenlos ein konkretes
+              Homepage-Konzept mit Textbeispielen und klarer Websitestruktur ausarbeite,
+              damit deine Website mehr Anfragen und Bewerbungen bekommt?
+            </p>
+            <span class="expertise-intro__index">[3/8]</span>
+          </div>
+          <div class="expertise-list expertise-list--hidden">
+            <article class="expertise-list__item">
+              <h3 class="expertise-list__heading">STRATEGY</h3>
+              <div class="expertise-list__body-wrap">
+                <p class="expertise-list__body">
+                  W&auml;rst du offen daf&uuml;r, dass ich dir kostenlos ein konkretes Homepage-Konzept mit Textbeispielen und klarer Websitestruktur ausarbeite, damit deine Website mehr Anfragen und Bewerbungen bekommt? W&auml;rst du offen daf&uuml;r, dass ich dir kostenlos ein konkretes Homepage-Konzept mit Textbeispielen und klarer Websitestruktur ausarbeite, damit deine Website mehr Anfragen und Bewerbungen bekommt?
+                </p>
+              </div>
+            </article>
+            <article class="expertise-list__item">
+              <h3 class="expertise-list__heading">CONCEPTION</h3>
+              <div class="expertise-list__body-wrap">
+                <p class="expertise-list__body">
+                  W&auml;rst du offen daf&uuml;r, dass ich dir kostenlos ein konkretes Homepage-Konzept mit Textbeispielen und klarer Websitestruktur ausarbeite, damit deine Website mehr Anfragen und Bewerbungen bekommt? W&auml;rst du offen daf&uuml;r, dass ich dir kostenlos ein konkretes Homepage-Konzept mit Textbeispielen und klarer Websitestruktur ausarbeite, damit deine Website mehr Anfragen und Bewerbungen bekommt?
+                </p>
+              </div>
+            </article>
+            <article class="expertise-list__item">
+              <h3 class="expertise-list__heading">MESSAGING</h3>
+              <div class="expertise-list__body-wrap">
+                <p class="expertise-list__body">
+                  W&auml;rst du offen daf&uuml;r, dass ich dir kostenlos ein konkretes Homepage-Konzept mit Textbeispielen und klarer Websitestruktur ausarbeite, damit deine Website mehr Anfragen und Bewerbungen bekommt? W&auml;rst du offen daf&uuml;r, dass ich dir kostenlos ein konkretes Homepage-Konzept mit Textbeispielen und klarer Websitestruktur ausarbeite, damit deine Website mehr Anfragen und Bewerbungen bekommt?
+                </p>
+              </div>
+            </article>
+            <article class="expertise-list__item">
+              <h3 class="expertise-list__heading">DEVELOPMENT</h3>
+              <div class="expertise-list__body-wrap">
+                <p class="expertise-list__body">
+                  W&auml;rst du offen daf&uuml;r, dass ich dir kostenlos ein konkretes Homepage-Konzept mit Textbeispielen und klarer Websitestruktur ausarbeite, damit deine Website mehr Anfragen und Bewerbungen bekommt? W&auml;rst du offen daf&uuml;r, dass ich dir kostenlos ein konkretes Homepage-Konzept mit Textbeispielen und klarer Websitestruktur ausarbeite, damit deine Website mehr Anfragen und Bewerbungen bekommt?
+                </p>
+              </div>
+            </article>
           </div>
         </div>
       </div>
     </section>
+    <section class="page-shell__next-section" aria-label="N&auml;chste Section"></section>
     <script type="module">
       import { createDecodeTextReveal } from './src/components/createDecodeTextReveal.js';
       import { createPortfolioPixelTrail } from './src/components/createPortfolioPixelTrail.js';
       import { createPixelHoverTextEffect } from './src/components/createPixelHoverTextEffect.js';
+
+      const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#%<>[]{}+*';
+      const randomGlyph = () => GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
 
       const lockIntroScroll = () => {
         const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -600,6 +648,10 @@
         const columns = 12;
         const rows = 8;
         const total = columns * rows;
+        const FORWARD_TRIGGER_PROGRESS = 0.08;
+        const BACKWARD_TRIGGER_PROGRESS = 0.02;
+        const FORWARD_LOCK_PROGRESS = 0.1;
+        const BACKWARD_LOCK_PROGRESS = 0.01;
         const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
         const seededNoise = (value) => {
           const noise = Math.sin(value * 91.345 + 17.17) * 10000;
@@ -699,11 +751,17 @@
         let targetProgress = 0;
         let animationStartedAt = 0;
         let animationFrom = 0;
+        let lockedScrollY = null;
 
         const setTilesByProgress = (progress) => {
           const isCovered = progress >= 0.995;
+          const sticky = scene.querySelector('.portfolio-transition-scene__sticky');
+          const overlayScale = 1 - progress * 0.3;
+          const overlayBlur = progress * 16;
 
           scene.classList.toggle('portfolio-transition-scene--green-covered', isCovered);
+          sticky?.style.setProperty('--portfolio-overlay-scale', `${overlayScale}`);
+          sticky?.style.setProperty('--portfolio-overlay-blur', `${overlayBlur}px`);
 
           tiles.forEach((tile) => {
             const start = Number.parseFloat(tile.dataset.start || '0');
@@ -749,7 +807,7 @@
           };
         };
 
-        const setTargetProgress = (nextTarget) => {
+        const setTargetProgress = (nextTarget, nextLockedScrollY) => {
           if (targetProgress === nextTarget) {
             return;
           }
@@ -759,6 +817,7 @@
           targetProgress = nextTarget;
           animationFrom = currentProgress;
           animationStartedAt = performance.now();
+          lockedScrollY = nextLockedScrollY;
         };
 
         const animateToTarget = () => {
@@ -770,6 +829,13 @@
               ? 4 * linearProgress ** 3
               : 1 - ((-2 * linearProgress + 2) ** 3) / 2;
 
+          if (typeof lockedScrollY === 'number') {
+            window.scrollTo({
+              top: lockedScrollY,
+              behavior: 'auto',
+            });
+          }
+
           currentProgress = animationFrom + (targetProgress - animationFrom) * easedProgress;
           setTilesByProgress(currentProgress);
 
@@ -777,6 +843,13 @@
             currentProgress = targetProgress;
             setTilesByProgress(currentProgress);
             animationFrameId = 0;
+            if (typeof lockedScrollY === 'number') {
+              window.scrollTo({
+                top: lockedScrollY,
+                behavior: 'auto',
+              });
+            }
+            lockedScrollY = null;
             releaseScrollInputPause();
             return;
           }
@@ -798,6 +871,7 @@
           const rect = scene.getBoundingClientRect();
           const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
           const scrollableDistance = Math.max(rect.height - viewportHeight, 1);
+          const sceneTopAbsolute = window.scrollY + rect.top;
           const sticky = scene.querySelector('.portfolio-transition-scene__sticky');
           const portfolio = scene.querySelector('.portfolio-section');
           const sceneScroll = Math.max(0 - rect.top, 0);
@@ -827,12 +901,29 @@
               : mobileTriggerStart + viewportHeight * 0.08;
           const revealDistance = Math.max(scrollableDistance - holdDistance, 1);
           const scrollProgress = clamp((0 - rect.top - holdDistance) / revealDistance, 0, 1);
+          const nextTarget =
+            targetProgress >= 0.5
+              ? scrollProgress > BACKWARD_TRIGGER_PROGRESS
+                ? 1
+                : 0
+              : scrollProgress >= FORWARD_TRIGGER_PROGRESS
+                ? 1
+                : 0;
+          const lockedProgress =
+            nextTarget === 1 ? FORWARD_LOCK_PROGRESS : BACKWARD_LOCK_PROGRESS;
+          const transitionThresholdScroll = clamp(
+            nextTarget === 1
+              ? Math.max(window.scrollY, sceneTopAbsolute + holdDistance + revealDistance * lockedProgress)
+              : Math.min(window.scrollY, sceneTopAbsolute + holdDistance + revealDistance * lockedProgress),
+            sceneTopAbsolute,
+            sceneTopAbsolute + scrollableDistance,
+          );
           const mobilePortfolioOffset =
             portfolioRevealDistance > 0 ? -clamp(sceneScroll / portfolioRevealDistance, 0, 1) * portfolioRevealDistance : 0;
 
           sticky?.style.setProperty('--portfolio-mobile-scroll-offset', `${mobilePortfolioOffset}px`);
 
-          setTargetProgress(scrollProgress >= 0.08 ? 1 : 0);
+          setTargetProgress(nextTarget, transitionThresholdScroll);
           requestTileAnimation();
         };
 
@@ -854,18 +945,29 @@
         const track = document.querySelector('.expertise-title-track');
         const root = document.querySelector('.expertise-title');
         const title = document.querySelector('.expertise-title__text');
+        const content = document.querySelector('.expertise-intro');
+        const list = document.querySelector('.expertise-list');
+        const listItems = Array.from(document.querySelectorAll('.expertise-list__item'));
         const finalText = 'EXPERTISE';
 
-        if (!scene || !track || !root || !title) {
+        if (!scene || !track || !root || !title || !content || !list || listItems.length === 0) {
           return;
         }
 
         const fitTitle = () => {
-          const availableWidth = track.clientWidth;
+          const listWidth = list ? list.clientWidth : 0;
+          const trackStyle = window.getComputedStyle(track);
+          const horizontalPadding =
+            (Number.parseFloat(trackStyle.paddingLeft) || 0) +
+            (Number.parseFloat(trackStyle.paddingRight) || 0);
+          const fallbackWidth = track.clientWidth - horizontalPadding;
+          const availableWidth = listWidth || fallbackWidth;
 
           if (!availableWidth) {
             return;
           }
+
+          root.style.width = `${availableWidth}px`;
 
           let low = 24;
           let high = 320;
@@ -889,6 +991,9 @@
 
         let isVisible = false;
         let destroyDecode = () => {};
+        let activeFrameId = 0;
+        let hideAnimationFrameId = 0;
+        let sectionStartScroll = null;
 
         const revealTitle = () => {
           if (isVisible) {
@@ -896,11 +1001,16 @@
           }
 
           isVisible = true;
+          window.cancelAnimationFrame(hideAnimationFrameId);
           destroyDecode();
+          destroyDecode = () => {};
           title.textContent = finalText;
-          root.__pixelHoverUpdateText?.(finalText);
           root.classList.add('expertise-title--visible');
           root.classList.remove('expertise-title--hidden');
+          content.classList.add('expertise-intro--visible');
+          content.classList.remove('expertise-intro--hidden');
+          list.classList.add('expertise-list--visible');
+          list.classList.remove('expertise-list--hidden');
           root.classList.remove('pixel-hover-title--decoded');
           root.classList.remove('pixel-hover-title--decoding');
           destroyDecode = createDecodeTextReveal(root, title, finalText, {
@@ -917,33 +1027,119 @@
           isVisible = false;
           destroyDecode();
           destroyDecode = () => {};
-          root.classList.remove('expertise-title--visible');
-          root.classList.add('expertise-title--hidden');
+          content.classList.remove('expertise-intro--visible');
+          content.classList.add('expertise-intro--hidden');
+          content.classList.remove('expertise-intro--laptop-collapsed');
+          list.classList.remove('expertise-list--visible');
+          list.classList.add('expertise-list--hidden');
+          listItems.forEach((item) => {
+            item.classList.remove('expertise-list__item--active');
+          });
           root.classList.remove('pixel-hover-title--decoded');
           root.classList.remove('pixel-hover-title--decoding');
-          title.textContent = finalText;
-          root.__pixelHoverUpdateText?.(finalText);
+          const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+          if (reducedMotion) {
+            root.classList.remove('expertise-title--visible');
+            root.classList.add('expertise-title--hidden');
+            title.textContent = finalText;
+            return;
+          }
+
+          const startedAt = performance.now();
+          const duration = 420;
+
+          const tick = (now) => {
+            const progress = Math.min((now - startedAt) / duration, 1);
+            title.textContent = Array.from(finalText, (char) => {
+              if (char === ' ') {
+                return ' ';
+              }
+
+              return progress < 1 ? randomGlyph() : char;
+            }).join('');
+
+            if (progress < 1) {
+              hideAnimationFrameId = window.requestAnimationFrame(tick);
+              return;
+            }
+
+            root.classList.remove('expertise-title--visible');
+            root.classList.add('expertise-title--hidden');
+            title.textContent = finalText;
+          };
+
+          hideAnimationFrameId = window.requestAnimationFrame(tick);
         };
 
-        const syncTitle = () => {
-          if (scene.classList.contains('portfolio-transition-scene--green-covered')) {
-            revealTitle();
-          } else {
+        const updateActiveItem = () => {
+          activeFrameId = 0;
+
+          const rect = scene.getBoundingClientRect();
+          const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+          const isCovered = scene.classList.contains('portfolio-transition-scene--green-covered');
+          const isInViewport = rect.top < viewportHeight && rect.bottom > 0;
+
+          if (!isCovered || !isInViewport) {
+            sectionStartScroll = null;
             hideTitle();
+            return;
           }
+
+          const sceneScroll = Math.max(0 - rect.top, 0);
+          const scrollableDistance = Math.max(scene.offsetHeight - viewportHeight, 1);
+
+          revealTitle();
+
+          if (sectionStartScroll === null) {
+            sectionStartScroll = sceneScroll;
+          }
+
+          const firstItemStart = sectionStartScroll + viewportHeight * 0.22;
+          const releaseTail = viewportHeight * 1.05;
+          const sequenceDistance = Math.max(
+            scrollableDistance - firstItemStart - releaseTail,
+            viewportHeight * 2.6,
+          );
+          const itemScrollSpan = sequenceDistance / listItems.length;
+          const rawActiveIndex = Math.floor((sceneScroll - firstItemStart) / itemScrollSpan);
+          const activeIndex = Math.min(
+            listItems.length - 1,
+            Math.max(-1, rawActiveIndex),
+          );
+          const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+
+          content.classList.toggle(
+            'expertise-intro--laptop-collapsed',
+            viewportWidth >= 1024 && viewportWidth <= 1439 && activeIndex >= 0,
+          );
+
+          listItems.forEach((item, index) => {
+            item.classList.toggle('expertise-list__item--active', index === activeIndex);
+          });
         };
+
+        const requestUpdate = () => {
+          if (activeFrameId) {
+            return;
+          }
+
+          activeFrameId = window.requestAnimationFrame(updateActiveItem);
+        };
+
+        const observer = new MutationObserver(requestUpdate);
+        observer.observe(scene, {
+          attributes: true,
+          attributeFilter: ['class'],
+        });
 
         fitTitle();
         createPixelHoverTextEffect(root, title, finalText);
-        syncTitle();
-        new MutationObserver(syncTitle).observe(scene, {
-          attributeFilter: ['class'],
-          attributes: true,
-        });
-
+        updateActiveItem();
+        window.addEventListener('scroll', requestUpdate, { passive: true });
         window.addEventListener('resize', () => {
           fitTitle();
-          syncTitle();
+          requestUpdate();
         });
 
         if (document.fonts) {

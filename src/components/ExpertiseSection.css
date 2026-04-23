@@ -1,0 +1,31 @@
+.expertise-section {
+  position: relative;
+  width: 100%;
+  min-height: 500vh;
+  margin-top: 8rem;
+  overflow: clip;
+}
+
+.expertise-section__sticky {
+  position: sticky;
+  top: 0.625rem;
+  box-sizing: border-box;
+  width: 100%;
+  height: calc(100vh - 1.25rem);
+  padding: 2.5rem;
+  background: var(--color-surface-green);
+  overflow: hidden;
+}
+
+@media (max-width: 1023px) {
+  .expertise-section {
+    min-height: 580vh;
+    margin-top: var(--page-padding-x);
+  }
+
+  .expertise-section__sticky {
+    top: 0.625rem;
+    height: calc(100vh - 1.25rem);
+    padding: 8rem 1.5rem 1.5rem;
+  }
+}
